@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Route, NavLink } from "react-router-dom";
 import "bootstrap";
 
-import Home from "./home.jsx";
+import PhylotreeApplication from "./PhylotreeApplication.jsx";
 import Example1 from "./example1.jsx";
 import Example2 from "./example2.jsx";
 
@@ -58,7 +58,7 @@ function App() {
     <div>
       <Navbar />
       <div style={{ maxWidth: 1140 }} className="container-fluid">
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={PhylotreeApplication} />
         <Route path="/example1" component={Example1} />
         <Route path="/example2" component={Example2} />
       </div>
