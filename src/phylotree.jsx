@@ -3,7 +3,7 @@ import { scaleLinear } from "d3-scale";
 
 import Branch from "./branch.jsx";
 
-import "phylotree/phylotree.css";
+import "phylotree/build/phylotree.css";
 
 import "./styles/phylotree.css";
 

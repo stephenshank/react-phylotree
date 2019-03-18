@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import phylotree from "phylotree";
+import { phylotree } from "phylotree";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { 
   faArrowLeft, faArrowUp, faArrowDown, faArrowRight
