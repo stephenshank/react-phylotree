@@ -38,52 +38,62 @@ function ButtonGroup(props) {
 }
 
 function Button(props) {
-  var icon, style;
-  if (props.icon == "expandH") {
-    icon = [
-      <FontAwesomeIcon key={1} icon={faArrowLeft} />,
-      <FontAwesomeIcon key={2} icon={faArrowRight} />,
-    ];
-    style = {fontSize: 10};
-  } else if (props.icon == "compressH") {
-    icon = [
-      <FontAwesomeIcon key={1} icon={faArrowRight} />,
-      <FontAwesomeIcon key={2} icon={faArrowLeft} />,
-    ];
-    style = {fontSize: 10};
-  } else if (props.icon == "expandV") {
-    icon = [
-      <FontAwesomeIcon key={1} icon={faArrowUp} />,
-      <FontAwesomeIcon key={2} icon={faArrowDown} />,
-    ];
-    style = {fontSize: 10, display: "flex", flexDirection: "column"};
-  } else if (props.icon == "compressV") {
-    icon = [
-      <FontAwesomeIcon key={1} icon={faArrowDown} />,
-      <FontAwesomeIcon key={2} icon={faArrowUp} />,
-    ];
-    style = {fontSize: 10, display: "flex", flexDirection: "column"};
-  } else if (props.icon) {
-    icon = props.icon;
-    style = null;
-  } else {
-    icon = null,
-    style = null;
-  }
   return (<button
-    onClick={props.onClick}
     type="button"
     className="btn btn-secondary react-phylotree-button"
-    style={style}
     data-toggle="tooltip"
     data-placement="top"
-    title={props.title}
     trigger="hover"
+    {...props}
   >
-    {props.label}
-    {icon}
+    {props.children}
   </button>);
 }
+
+function HorizontalExpansionButton(props) {
+  return (<Button
+    style={{ fontSize: 10 }}
+    title="Expand horizontally"
+    {...props}
+  >
+    <FontAwesomeIcon key={1} icon={faArrowLeft} />
+    <FontAwesomeIcon key={2} icon={faArrowRight} />
+  </Button>);
+}
+
+function HorizontalCompressionButton(props) {
+  return (<Button
+    style={{ fontSize: 10 }}
+    title="Compress horizontally"
+    {...props}
+  >
+    <FontAwesomeIcon key={1} icon={faArrowRight} />
+    <FontAwesomeIcon key={2} icon={faArrowLeft} />
+  </Button>);
+}
+
+function VerticalExpansionButton(props) {
+  return (<Button
+    style={{fontSize: 10, display: "flex", flexDirection: "column"}}
+    title="Expand vertically"
+    {...props}
+  >
+    <FontAwesomeIcon key={1} icon={faArrowUp} />
+    <FontAwesomeIcon key={2} icon={faArrowDown} />
+  </Button>);
+}
+
+function VerticalCompressionButton(props) {
+  return (<Button
+    style={{fontSize: 10, display: "flex", flexDirection: "column"}}
+    title="Compress vertically"
+    {...props}
+  >
+    <FontAwesomeIcon key={1} icon={faArrowDown} />
+    <FontAwesomeIcon key={2} icon={faArrowUp} />
+  </Button>);
+}
+
 
 class PhylotreeApplication extends Component {
   constructor(props) {
@@ -119,24 +129,16 @@ class PhylotreeApplication extends Component {
       <h1>React Phylotree</h1>
       <div style={{display: "flex", justifyContent: "space-around"}}>
         <ButtonGroup>
-          <Button
-            icon={"expandH"}
-            title="Expand horizontally"
+          <HorizontalExpansionButton
             onClick={()=>this.toggleDimension("width", "expand")}
           />
-          <Button
-            icon={"compressH"}
-            title="Compress horizontally"
+          <HorizontalCompressionButton
             onClick={()=>this.toggleDimension("width", "compress")}
           />
-          <Button
-            icon={"expandV"}
-            title="Expand vertically"
+          <VerticalExpansionButton
             onClick={()=>this.toggleDimension("height", "expand")}
           />
-          <Button
-            icon={"compressV"}
-            title="Compress vertically"
+          <VerticalCompressionButton
             onClick={()=>this.toggleDimension("height", "compress")}
           />
         </ButtonGroup>
