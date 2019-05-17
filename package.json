@@ -16,7 +16,8 @@
     "popper.js": "^1.14.6",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
-    "react-router-dom": "^4.3.1"
+    "react-router-dom": "^4.3.1",
+    "text-width": "^1.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.0",
@@ -39,7 +40,7 @@
     "serve": "node src/server.js",
     "library": "npx webpack --devtool=none --config=webpack.lib.config.js"
   },
-  "files": {
+  "files": [
     "lib/bundle.js"
-  }
+  ]
 }

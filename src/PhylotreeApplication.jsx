@@ -80,7 +80,7 @@ class PhylotreeApplication extends Component {
     this.state = {
       tree: null,
       width: 500,
-      height: 500
+      height: 400
     };
   }
   componentDidMount() {
