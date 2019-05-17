@@ -10,27 +10,6 @@ import $ from "jquery";
 import Phylotree from "./phylotree.jsx";
 
 
-function placenodes(tree) {
-  var current_leaf_height = -1,
-    unique_id = 0;
-  tree.max_x = 0;
-  function node_layout(node) {
-    unique_id = node.unique_id = unique_id + 1;
-    node.data.x = node.parent  ?
-      +node.data.attribute + node.parent.data.x :
-      0;
-    tree.max_x = Math.max(tree.max_x, node.data.x);
-    if(node.children) {
-      node.data.y = node.children.map(node_layout)
-        .reduce( (a,b) => a + b, 0) / node.children.length;
-    } else {
-      current_leaf_height = node.data.y = current_leaf_height+1;
-    }
-    return node.data.y;
-  }
-  node_layout(tree.nodes);
-}
-
 function ButtonGroup(props) {
   return (<div className="btn-group" role="group" aria-label="Button group">
     {props.children}
@@ -111,7 +90,6 @@ class PhylotreeApplication extends Component {
     text("data/CD2.new")
       .then(newick => {
         const tree = new phylotree(newick);
-        placenodes(tree);
         this.setState({
           tree: tree
         });

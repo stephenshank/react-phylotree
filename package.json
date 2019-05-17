@@ -1,7 +1,7 @@
 {
   "name": "react-phylotree",
-  "version": "1.0.0",
-  "main": "src/main.jsx",
+  "version": "0.0.1",
+  "main": "lib/bundle.js",
   "repository": "https://github.com/stephenshank/react-phylotree",
   "author": "Stephen Shank <sshank314@gmail.com>",
   "license": "MIT",
@@ -36,6 +36,10 @@
   "scripts": {
     "develop": "npx webpack-dev-server --mode=development --open",
     "build": "webpack --devtool=none",
-    "serve": "node src/server.js"
+    "serve": "node src/server.js",
+    "library": "npx webpack --devtool=none --config=webpack.lib.config.js"
+  },
+  "files": {
+    "lib/bundle.js"
   }
 }

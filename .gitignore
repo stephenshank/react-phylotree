@@ -1,4 +1,6 @@
 .yalc
 yalc.lock
 dist
+lib
 node_modules
+tags*
