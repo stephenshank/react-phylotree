@@ -22,9 +22,9 @@ function Branch(props) {
     source_y = y_scale(source.data.y),
     target_x = x_scale(target.data.x),
     target_y = y_scale(target.data.y),
-    text_label_width = text_width(
+    text_label_width = props.leaf ? text_width(
       target.data.name, { family: "Courier", size: 14}
-    ),
+    ) : 0,
     tracer_x2 = width - text_label_width - (text_label_width == 0 ? 0 :5),
     data = [
       [source_x, source_y],

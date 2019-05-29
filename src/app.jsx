@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Route, NavLink } from "react-router-dom";
 import "bootstrap";
 
-import PhylotreeApplication from "./PhylotreeApplication.jsx";
+import PhylotreeApplication from "./BUSTEDS.jsx";
 import Example1 from "./example1.jsx";
 import Example2 from "./example2.jsx";
 

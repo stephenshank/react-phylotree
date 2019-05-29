@@ -103,9 +103,9 @@ class PhylotreeApplication extends Component {
     this.setState(new_state);
   }
   render() {
-    return (<div style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}}>
+    return (<div>
       <h1>React Phylotree</h1>
-      <div style={{display: "flex", justifyContent: "space-around"}}>
+      <div>
         <ButtonGroup>
           <HorizontalExpansionButton
             onClick={()=>this.toggleDimension("width", "expand")}
@@ -120,6 +120,7 @@ class PhylotreeApplication extends Component {
             onClick={()=>this.toggleDimension("height", "compress")}
           />
         </ButtonGroup>
+        <Button>PNG</Button>
       </div>
       <svg width={this.state.width} height={this.state.height}>
         <Phylotree {...this.state}/>

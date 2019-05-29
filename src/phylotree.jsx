@@ -34,10 +34,11 @@ function placenodes_internal(tree) {
     unique_id = 0;
   tree.max_x = 0;
   tree.max_y = 0;
+  tree.node_order = [];
   function node_layout(node) {
     unique_id = node.unique_id = unique_id + 1;
     node.data.x = node.parent  ?
-      +node.data.attribute + node.parent.data.x :
+      node.parent.data.x + 1 :
       0;
     tree.max_x = Math.max(tree.max_x, node.data.x);
     if(!tree.is_leafnode(node)) {
@@ -45,19 +46,25 @@ function placenodes_internal(tree) {
     }
     if(!node.data.y && node.data.name != "root") {
       current_leaf_height = node.data.y = current_leaf_height+1;
+      tree.node_order.push(node.data.name);
     }
     if(node.parent && !node.parent.data.y && node.data.name != "root") {
-      current_leaf_height = node.parent.data.y = current_leaf_height+1;
+      if(node.parent.data.name != "root") {
+        current_leaf_height = node.parent.data.y = current_leaf_height+1;
+        tree.node_order.push(node.parent.data.name);
+      } 
     }
     tree.max_y = Math.max(tree.max_y, current_leaf_height);
   }
   node_layout(tree.nodes);
+  const root = tree.get_node_by_name("root");
+  root.data.y = root.children.map(child => child.data.y)
+    .reduce((a,b)=>a+b, 0) / root.children.length;
 }
 
 function Phylotree(props) {
   const { tree } = props;
   if (!tree) return <g />;
-  placenodes_internal(tree);
   const text_offset = tree.get_tips()
       .map(node => text_width(node.data.name, { family: "Courier", size: 14 }))
       .reduce((a,b) => Math.max(a,b), 0),
@@ -90,7 +97,6 @@ function Phylotree(props) {
         leaf={tree.is_leafnode(link.target)}
       />);
     }) }
-    <Tracer {...tracer_props} />
   </g>);
 }
 
@@ -104,3 +110,4 @@ Phylotree.defaultProps = {
 };
 
 export default Phylotree;
+export { placenodes_internal };
