@@ -58,22 +58,34 @@ class PhylotreeApplication extends Component {
         tree: this.state.tree
       },
       svg_props = {
-        width: phylotree_props.width + 60,
-        height: phylotree_props.height,   
-      };
-    var sequence_data, site_size;
+        width: phylotree_props.width + 80,
+        height: phylotree_props.height + 30,   
+      },
+      site_padding = 5,
+      codon_label_height = 30;
+    var codon_sequence_data, amino_acid_sequence_data, site_size;
     if(this.state.tree) {
-      sequence_data = this.state.tree.node_order.map(node => {
+      codon_sequence_data = this.state.tree.node_order.map(node => {
         return {
           header: node,
           seq: this.state.data.slac["branch attributes"]["0"][node]["codon"][0][sites[0]]
         };
       });
-      sequence_data.number_of_sequences  = sequence_data.length;
-      sequence_data.number_of_sites = 3;
+      codon_sequence_data.number_of_sequences  = codon_sequence_data.length;
+      codon_sequence_data.number_of_sites = 3;
+
+      amino_acid_sequence_data = this.state.tree.node_order.map(node => {
+        return {
+          header: node,
+          seq: this.state.data.slac["branch attributes"]["0"][node]["amino-acid"][0][sites[0]]
+        };
+      });
+      amino_acid_sequence_data.number_of_sequences  = amino_acid_sequence_data.length;
+      amino_acid_sequence_data.number_of_sites = 1;
+
       site_size = phylotree_props.height / this.state.tree.node_order.length;
     } else {
-      sequence_data = null; 
+      codon_sequence_data = null; 
     }
     return (<div>
       <h1>BUSTED S</h1>
@@ -93,9 +105,25 @@ class PhylotreeApplication extends Component {
         <Phylotree {...phylotree_props}/>
         <BaseSVGAlignment
           translateX={phylotree_props.width}
-          sequence_data={sequence_data}
+          sequence_data={codon_sequence_data}
           site_size={site_size}
         />
+        <BaseSVGAlignment
+          translateX={phylotree_props.width+3*site_size+site_padding}
+          sequence_data={amino_acid_sequence_data}
+          site_size={site_size}
+          amino_acid
+        />
+        <text
+          x={phylotree_props.width + (4*site_size+site_padding)/2}
+          y={phylotree_props.height + codon_label_height/2}
+          alignmentBaseline="middle"
+          textAnchor="middle"
+          fontFamily="Courier"
+          fontSize={14}
+        >
+          Codon {sites[0]}
+        </text>
       </svg>
     </div>);
   }
