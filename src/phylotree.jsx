@@ -2,7 +2,7 @@ import React from "react";
 import { scaleLinear } from "d3-scale";
 import text_width from "text-width";
 
-import Branch from "./branch.jsx";
+import Branch, { Tracer } from "./branch.jsx";
 
 import "phylotree/build/phylotree.css";
 
@@ -70,7 +70,12 @@ function Phylotree(props) {
     y_scale = scaleLinear()
       .domain([0, tree.max_y])
       .range([0, padded_height]),
-    translation = `${props.paddingLeft}, ${props.paddingRight}`;
+    translation = `${props.paddingLeft}, ${props.paddingRight}`,
+    tracer_props = {
+      x1: x_scale(tree.nodes.data.x),
+      x2: padded_width,
+      y: y_scale(tree.nodes.data.y)
+    };
   return (<g transform={`translate(${translation})`}>
     {tree.links.map(link => {
       const source_id = link.source.unique_id,
@@ -85,6 +90,7 @@ function Phylotree(props) {
         leaf={tree.is_leafnode(link.target)}
       />);
     }) }
+    <Tracer {...tracer_props} />
   </g>);
 }
 

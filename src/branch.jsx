@@ -4,6 +4,17 @@ import text_width from "text-width";
 import { line } from "d3-shape";
 
 
+function Tracer(props) {
+  return (<line
+    x1={props.x1}
+    x2={props.x2}
+    y1={props.y}
+    y2={props.y}
+    className="branch-tracer"
+  />);
+}
+
+
 function Branch(props) {
   const { x_scale, y_scale, width } = props,
     { source, target } = props.link,
@@ -28,13 +39,7 @@ function Branch(props) {
       className="branch"
       d={branch_line(data)}
     />
-    {<line
-      x1={target_x}
-      x2={tracer_x2}
-      y1={target_y}
-      y2={target_y}
-      className="branch-tracer"
-    />}
+    {<Tracer x1={target_x} x2={tracer_x2} y={target_y} />}
     {props.leaf ? <text
       x={width}
       y={target_y}
@@ -46,3 +51,4 @@ function Branch(props) {
 }
 
 export default Branch;
+export { Tracer };
