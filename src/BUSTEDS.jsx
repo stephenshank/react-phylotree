@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { phylotree } from "phylotree";
 import { json } from "d3-fetch";
-import $ from "jquery";
+import { saveSvgAsPng as savePNG } from "save-svg-as-png";
 
 import Phylotree, { placenodes_internal } from "./phylotree.jsx";
 import { BaseSVGAlignment } from "alignment.js";
@@ -47,6 +47,9 @@ class PhylotreeApplication extends Component {
     new_state[dimension] = new_dimension;
     this.setState(new_state);
   }
+  savePNG() {
+    savePNG(document.getElementById("busteds"), "alignment.png");
+  }
   render() {
     const sites = [7, 67, 85, 123],
       phylotree_props = {
@@ -77,9 +80,16 @@ class PhylotreeApplication extends Component {
       <div>
         <label>Sites:</label>
         {sites.map(site => <span key={site}>{site}, </span>)}
-        <Button>PNG</Button>
+        <Button onClick={() => this.savePNG()}>PNG</Button>
       </div>
-      <svg {...svg_props}>
+      <svg {...svg_props} id="busteds">
+        <rect
+          x={0}
+          y={0}
+          width={svg_props.width}
+          height={svg_props.height}
+          fill="white"
+        />
         <Phylotree {...phylotree_props}/>
         <BaseSVGAlignment
           translateX={phylotree_props.width}
