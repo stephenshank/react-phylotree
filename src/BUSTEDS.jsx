@@ -75,7 +75,10 @@ class PhylotreeApplication extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tree: null
+      tree: null,
+      sites: null,
+      max_site: null,
+      current_site: 1
     };
   }
   componentDidMount() {
@@ -86,7 +89,9 @@ class PhylotreeApplication extends Component {
         placenodes_internal(tree);
         this.setState({
           tree: tree,
-          data: data
+          data: data,
+          current_site: 1,
+          sites: [0],
         });
       });
   }
@@ -99,6 +104,44 @@ class PhylotreeApplication extends Component {
   }
   savePNG() {
     savePNG(document.getElementById("busteds"), "alignment.png");
+  }
+  handleInputChange(e) {
+    const new_current_site = e.target.value,
+      new_sites = this.state.sites.map(i => i),
+      max_sites = this.state.data.busted.input["number of sites"];
+    if(new_current_site == "") {
+      this.setState({
+        current_site: new_current_site
+      });
+    }
+    else if(new_current_site > 0 && new_current_site <= max_sites) {
+      new_sites[new_sites.length-1] = new_current_site-1;
+      this.setState({
+        current_site: new_current_site,
+        sites: new_sites
+      });
+    }
+  }
+  addSite() {
+    const n_sites = this.state.sites.length;
+    if(n_sites < 5) {
+      const new_sites = this.state.sites.concat([0]);
+      this.setState({
+        current_site: 1,
+        sites: new_sites
+      }, ()=>{this.numberInput.focus();});
+    }
+  }
+  removeSite() {
+    const n_sites = this.state.sites.length;
+    if(n_sites > 1) {
+      const new_current_site = this.state.sites[n_sites-2]+1,
+        new_sites = this.state.sites.slice(0, n_sites-1);
+      this.setState({
+        current_site: new_current_site,
+        sites: new_sites
+      });
+    }
   }
   render() {
     if(!this.state.tree) return <div/>;
@@ -114,8 +157,7 @@ class PhylotreeApplication extends Component {
       site_size = phylotree_props.height / this.state.tree.node_order.length,
       site_padding = 5,
       codon_label_height = 30;
-    const sites = [275, 280, 216, 270].map(site=>site),
-      //const sites = [276, 236, 213, 159].map(site=>site-1),
+    const { sites } = this.state,
       n_sites = sites.length,
       column_padding = 40,
       codon_column_width = 4*site_size+site_padding+column_padding,
@@ -136,9 +178,20 @@ class PhylotreeApplication extends Component {
       bar_padding = 2;
     return (<div>
       <h1>BUSTED S</h1>
-      <div>
-        <label>Sites:</label>
-        {sites.map(site => <span key={site}>{site}, </span>)}
+      <div style={{width: 500, display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: 20}}>
+        <span>
+          Current site:
+          <input
+            name="numberOfGuests"
+            type="number"
+            value={this.state.current_site}
+            onChange={e => this.handleInputChange(e)}
+            ref={input => { this.numberInput = input; }}
+            style={{width:50}}
+          />
+        </span>
+        <Button onClick={() => this.addSite()}>Add site</Button>
+        <Button onClick={() => this.removeSite()}>Remove site</Button>
         <Button onClick={() => this.savePNG()}>PNG</Button>
       </div>
       <svg {...svg_props} id="busteds" style={{fontFamily: "sans-serif"}}>
