@@ -81,7 +81,7 @@ class PhylotreeApplication extends Component {
   componentDidMount() {
     json("data/viz.json")
       .then(data => {
-        const newick = data.slac.trees[0].newickString,
+        const newick = data.slac.input.trees[0],
           tree = new phylotree(newick);
         placenodes_internal(tree);
         this.setState({
@@ -104,15 +104,20 @@ class PhylotreeApplication extends Component {
     if(!this.state.tree) return <div/>;
     const phylotree_props = {
         width: 500,
-        height: 500,
-        tree: this.state.tree
+        height: 800,
+        tree: this.state.tree,
+        paddingTop: 5,
+        paddingBottom: 5,
+        paddingLeft: 5,
+        paddingRight: 5
       },
       site_size = phylotree_props.height / this.state.tree.node_order.length,
       site_padding = 5,
       codon_label_height = 30;
-    const sites = [7, 67, 85, 123].map(site=>site-1),
+    const sites = [275, 280, 216, 270].map(site=>site),
+      //const sites = [276, 236, 213, 159].map(site=>site-1),
       n_sites = sites.length,
-      column_padding = 25,
+      column_padding = 40,
       codon_column_width = 4*site_size+site_padding+column_padding,
       ccw_nopad = 4*site_size + site_padding,
       bar_height = 200,
@@ -121,13 +126,9 @@ class PhylotreeApplication extends Component {
         height: phylotree_props.height + codon_label_height + bar_height,
       };
     const log_scale = x => Math.log(1+x),
-      busted_data = this.state.data.busted["Evidence Ratios"]["constrained"][0]
-        .filter((d,i) => sites.indexOf(i) != -1)
-        .map(log_scale),
-      bustedsrv_data = this.state.data.bustedsrv["Evidence Ratios"]["constrained"][0]
-        .filter((d,i) => sites.indexOf(i) != -1)
-        .map(log_scale),
-      data = busted_data.concat(bustedsrv_data),
+      busted_data = sites.map(site=>this.state.data.busted["Evidence Ratios"]["constrained"][0][site]),
+      bustedsrv_data = sites.map(site=>this.state.data.bustedsrv["Evidence Ratios"]["constrained"][0][site]),
+      data = busted_data.concat(bustedsrv_data).map(log_scale),
       bar_scale = scaleLinear()
         .domain([0, max(data)])
         .range([0, bar_height]),
@@ -162,23 +163,23 @@ class PhylotreeApplication extends Component {
           translateX={phylotree_props.width-75}
           padding={{ top: 0, right: 0, bottom: 0, left: 0 }}
         />
-        {busted_data.map((data, i) => {
-          const current_bar_height = bar_scale(data);
+        {busted_data.map((busted_datum, i) => {
+          const current_bar_height = bar_scale(log_scale(busted_datum));
           return (<rect
             x={phylotree_props.width + i*codon_column_width + ccw_nopad/2 - bar_width - bar_padding}
             y={bar_height - current_bar_height}
-            key={'busted'+i}
+            key={"busted"+i}
             width={bar_width}
             height={current_bar_height}
             fill="red"
           />);
         })}
-        {bustedsrv_data.map((data, i) => {
-          const current_bar_height = bar_scale(data);
+        {bustedsrv_data.map((bustedsrv_datum, i) => {
+          const current_bar_height = bar_scale(log_scale(bustedsrv_datum));
           return (<rect
             x={phylotree_props.width + i*codon_column_width + ccw_nopad/2 + bar_padding}
             y={bar_height - current_bar_height}
-            key={'busted'+i}
+            key={"busted"+i}
             width={bar_width}
             height={current_bar_height}
             fill="blue"

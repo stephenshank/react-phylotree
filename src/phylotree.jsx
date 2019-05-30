@@ -77,7 +77,7 @@ function Phylotree(props) {
     y_scale = scaleLinear()
       .domain([0, tree.max_y])
       .range([0, padded_height]),
-    translation = `${props.paddingLeft}, ${props.paddingRight}`,
+    translation = `${props.paddingLeft}, ${props.paddingTop}`,
     tracer_props = {
       x1: x_scale(tree.nodes.data.x),
       x2: padded_width,
