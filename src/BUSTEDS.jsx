@@ -204,9 +204,9 @@ class PhylotreeApplication extends Component {
         />
         <g transform={`translate(400, 75)`}>
           <rect x={5} y={10} width={20} height={20} fill="red" />
-          <text x={0} y={20} textAnchor="end" alignmentBaseline="middle">No synonymous rate variation</text>
+          <text x={0} y={20} textAnchor="end" alignmentBaseline="middle">BUSTED</text>
           <rect x={5} y={40} width={20} height={20} fill="blue" />
-          <text x={0} y={50} textAnchor="end" alignmentBaseline="middle">Synonymous rate variation</text>
+          <text x={0} y={50} textAnchor="end" alignmentBaseline="middle">BUSTED[S]</text>
         </g>
         <SitePlotAxis
           data={data}

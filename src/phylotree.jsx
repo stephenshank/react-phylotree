@@ -1,4 +1,5 @@
 import React from "react";
+import { phylotree } from "phylotree";
 import { scaleLinear } from "d3-scale";
 import text_width from "text-width";
 
@@ -27,6 +28,7 @@ function placenodes(tree) {
     return node.data.y;
   }
   node_layout(tree.nodes);
+  tree.max_y = tree.get_tips().length;
 }
 
 function placenodes_internal(tree) {
@@ -63,8 +65,12 @@ function placenodes_internal(tree) {
 }
 
 function Phylotree(props) {
-  const { tree } = props;
-  if (!tree) return <g />;
+  var { tree, newick } = props;
+  if (!tree && !newick) return <g />;
+  else if(!tree) {
+    tree = new phylotree(newick);
+    placenodes_internal(tree);
+  }
   const text_offset = tree.get_tips()
       .map(node => text_width(node.data.name, { family: "Courier", size: 14 }))
       .reduce((a,b) => Math.max(a,b), 0),
