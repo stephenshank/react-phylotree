@@ -12,7 +12,9 @@ function placenodes(tree) {
     unique_id = 0;
   tree.max_x = 0;
   function node_layout(node) {
-    unique_id = node.unique_id = unique_id + 1;
+    if(!node.unique_id) {
+      unique_id = node.unique_id = unique_id + 1;
+    }
     node.data.abstract_x = node.parent  ?
       +node.data.attribute + node.parent.data.abstract_x :
       0;

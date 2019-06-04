@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import { phylotree } from "phylotree";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { 
-  faArrowLeft, faArrowUp, faArrowDown, faArrowRight
+  faArrowLeft, faArrowUp, faArrowDown, faArrowRight,
+  faSortAmountUp
 } from "@fortawesome/free-solid-svg-icons";
 import { text } from "d3-fetch";
+import { max } from "d3-array";
 import $ from "jquery";
 
 import Phylotree from "./phylotree.jsx";
@@ -74,6 +76,40 @@ function VerticalCompressionButton(props) {
 }
 
 
+function AscendingSortButton(props) {
+  return (<Button
+    title="Sort in ascending order"
+    {...props}
+  >
+    <FontAwesomeIcon key={1} icon={faSortAmountUp} flip="vertical"/>
+  </Button>);
+}
+
+
+function DescendingSortButton(props) {
+  return (<Button
+    title="Sort in ascending order"
+    {...props}
+  >
+    <FontAwesomeIcon key={1} icon={faSortAmountUp}/>
+  </Button>);
+}
+
+
+function sort_nodes (tree, direction) {
+  tree.traverse_and_compute (function (n) {
+    var d = 1;
+    if (n.children && n.children.length) {
+      d += max (n.children, function (d) { return d["count_depth"];});
+    }
+    n["count_depth"] = d;
+  });
+  const asc = direction == "ascending";
+  tree.resort_children (function (a,b) {
+    return (a["count_depth"] - b["count_depth"]) * (asc ? 1 : -1);
+  });
+}
+
 class PhylotreeApplication extends Component {
   constructor(props) {
     super(props);
@@ -90,9 +126,7 @@ class PhylotreeApplication extends Component {
     text("data/CD2.new")
       .then(newick => {
         const tree = new phylotree(newick);
-        this.setState({
-          tree: tree
-        });
+        this.setState({tree});
       });
   }
   toggleDimension(dimension, direction) {
@@ -101,6 +135,11 @@ class PhylotreeApplication extends Component {
       new_state = {};
     new_state[dimension] = new_dimension;
     this.setState(new_state);
+  }
+  handleSort(direction) {
+    const { tree } = this.state;
+    sort_nodes(tree, direction);
+    this.setState({tree});
   }
   render() {
     return (<div style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}}>
@@ -118,6 +157,12 @@ class PhylotreeApplication extends Component {
           />
           <VerticalCompressionButton
             onClick={()=>this.toggleDimension("height", "compress")}
+          />
+          <AscendingSortButton
+            onClick={()=>this.handleSort("ascending")}
+          />
+          <DescendingSortButton
+            onClick={()=>this.handleSort("descending")}
           />
         </ButtonGroup>
       </div>
