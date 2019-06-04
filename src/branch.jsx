@@ -5,10 +5,10 @@ import { line } from "d3-shape";
 
 function Branch(props) {
   const { x_scale, y_scale } = props,
-    source_x = x_scale(props.link.source.data.x),
-    source_y = y_scale(props.link.source.data.y),
-    target_x = x_scale(props.link.target.data.x),
-    target_y = y_scale(props.link.target.data.y),
+    source_x = x_scale(props.link.source.data.abstract_x),
+    source_y = y_scale(props.link.source.data.abstract_y),
+    target_x = x_scale(props.link.target.data.abstract_x),
+    target_y = y_scale(props.link.target.data.abstract_y),
     data = [
       [source_x, source_y],
       [source_x, target_y],

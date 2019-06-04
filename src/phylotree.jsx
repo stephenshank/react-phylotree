@@ -13,17 +13,17 @@ function placenodes(tree) {
   tree.max_x = 0;
   function node_layout(node) {
     unique_id = node.unique_id = unique_id + 1;
-    node.data.x = node.parent  ?
-      +node.data.attribute + node.parent.data.x :
+    node.data.abstract_x = node.parent  ?
+      +node.data.attribute + node.parent.data.abstract_x :
       0;
-    tree.max_x = Math.max(tree.max_x, node.data.x);
+    tree.max_x = Math.max(tree.max_x, node.data.abstract_x);
     if(node.children) {
-      node.data.y = node.children.map(node_layout)
+      node.data.abstract_y = node.children.map(node_layout)
         .reduce( (a,b) => a + b, 0) / node.children.length;
     } else {
-      current_leaf_height = node.data.y = current_leaf_height+1;
+      current_leaf_height = node.data.abstract_y = current_leaf_height+1;
     }
-    return node.data.y;
+    return node.data.abstract_y;
   }
   node_layout(tree.nodes);
 }
