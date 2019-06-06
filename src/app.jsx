@@ -6,6 +6,7 @@ import "bootstrap";
 import PhylotreeApplication from "./PhylotreeApplication.jsx";
 import MWE from "./app/mwe.jsx";
 import Vanilla from "./app/vanilla.jsx";
+import NoBranchLengths from "./app/no_branch_lengths.jsx";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -49,6 +50,7 @@ function Navbar() {
     <Dropdown title="Examples">
       <Link to="/mwe" header="Minimal working example" />
       <Link to="/vanilla" header="Vanilla" />
+      <Link to="/no-branch-lengths" header="No branch lengths" />
     </Dropdown>
   </nav>);
 }
@@ -61,6 +63,7 @@ function App() {
         <Route exact path="/" component={PhylotreeApplication} />
         <Route path="/mwe" component={MWE} />
         <Route path="/vanilla" component={Vanilla} />
+        <Route path="/no-branch-lengths" component={NoBranchLengths} />
       </div>
     </div>
   </BrowserRouter>);
