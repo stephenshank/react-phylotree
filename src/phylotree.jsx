@@ -1,5 +1,7 @@
 import React from "react";
+import { phylotree } from "phylotree";
 import { scaleLinear } from "d3-scale";
+import text_width from "./text_width";
 
 import Branch from "./branch.jsx";
 
@@ -28,20 +30,30 @@ function placenodes(tree) {
     return node.data.abstract_y;
   }
   node_layout(tree.nodes);
+  tree.max_y = current_leaf_height;
 }
 
 
 function Phylotree(props) {
-  const { tree } = props;
-  if (!tree) return <g />;
+  var{ tree, newick } = props;
+  if (!tree && !newick) {
+    return <g />;
+  } else if(!tree) {
+    tree = new phylotree(newick);
+  }
   placenodes(tree);
-  const x_scale = scaleLinear()
+  const text_offset = props.show_labels ? tree.get_tips()
+      .map(node => text_width(node.data.name, 14))
+      .reduce((a,b) => Math.max(a,b), 0) : 0,
+    padded_width = props.width - props.paddingLeft - props.paddingRight,
+    padded_height = props.height - props.paddingTop - props.paddingBottom,
+    x_scale = scaleLinear()
       .domain([0, tree.max_x])
-      .range([1, props.width-1]),
+      .range([0, padded_width-text_offset]),
     y_scale = scaleLinear()
-      .domain([0, 10])
-      .range([1, props.height-1]);
-  return (<g>
+      .domain([0, tree.max_y])
+      .range([0, padded_height]);
+  return (<g transform={`translate(${props.paddingLeft}, ${props.paddingRight})`}>
     {tree.links.map(link => {
       const source_id = link.source.unique_id,
         target_id = link.target.unique_id,
@@ -51,6 +63,9 @@ function Phylotree(props) {
         x_scale={x_scale}
         y_scale={y_scale}
         link={link}
+        max_branch_width={padded_width}
+        leaf={tree.is_leafnode(link.target)}
+        show_label={props.show_labels}
       />);
     }) }
   </g>);
@@ -58,7 +73,12 @@ function Phylotree(props) {
 
 Phylotree.defaultProps = {
   width: 500,
-  height: 500
+  height: 500,
+  paddingTop: 10,
+  paddingBottom: 10,
+  paddingLeft: 10,
+  paddingRight: 10,
+  show_labels: true
 };
 
 export default Phylotree;

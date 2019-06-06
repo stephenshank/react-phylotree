@@ -3,7 +3,7 @@ import { phylotree } from "phylotree";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { 
   faArrowLeft, faArrowUp, faArrowDown, faArrowRight,
-  faSortAmountUp
+  faSortAmountUp, faAlignRight, faAlignLeft
 } from "@fortawesome/free-solid-svg-icons";
 import { text } from "d3-fetch";
 import { max } from "d3-array";
@@ -88,10 +88,30 @@ function AscendingSortButton(props) {
 
 function DescendingSortButton(props) {
   return (<Button
-    title="Sort in ascending order"
+    title="Sort in descending order"
     {...props}
   >
     <FontAwesomeIcon key={1} icon={faSortAmountUp}/>
+  </Button>);
+}
+
+
+function AlignTipsRightButton(props) {
+  return (<Button
+    title="Align tips to right"
+    {...props}
+  >
+    <FontAwesomeIcon key={1} icon={faAlignRight}/>
+  </Button>);
+}
+
+
+function AlignTipsLeftButton(props) {
+  return (<Button
+    title="Align tips to left"
+    {...props}
+  >
+    <FontAwesomeIcon key={1} icon={faAlignLeft}/>
   </Button>);
 }
 
@@ -163,6 +183,12 @@ class PhylotreeApplication extends Component {
           />
           <DescendingSortButton
             onClick={()=>this.handleSort("descending")}
+          />
+          <AlignTipsLeftButton
+            onClick={()=>this.alignTips("left")}
+          />
+          <AlignTipsRightButton
+            onClick={()=>this.alignTips("right")}
           />
         </ButtonGroup>
       </div>

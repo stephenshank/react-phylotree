@@ -1,12 +1,16 @@
 path.branch {
   transition: d 0.5s;
 }
- g.internal-node, g.node {
+
+.branch-tracer {
   transition: transform 0.5s;
 }
- g.node > text {
-  transition: transform 0.5s;
+
+.label {
+  transition: x 0.5s y 0.5s;
 }
- g.node > .branch-tracer {
-  transition: all 0.5s;
+
+text.label {
+  font-family: Courier;
+  font-size: 14px;
 }

@@ -4,8 +4,8 @@ import { BrowserRouter, Route, NavLink } from "react-router-dom";
 import "bootstrap";
 
 import PhylotreeApplication from "./PhylotreeApplication.jsx";
-import Example1 from "./example1.jsx";
-import Example2 from "./example2.jsx";
+import MWE from "./app/mwe.jsx";
+import Vanilla from "./app/vanilla.jsx";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -47,8 +47,8 @@ function Navbar() {
       React Phylotree
     </NavLink>
     <Dropdown title="Examples">
-      <Link to="/example1" header="Example 1" />
-      <Link to="/example2" header="Example 2" />
+      <Link to="/mwe" header="Minimal working example" />
+      <Link to="/vanilla" header="Vanilla" />
     </Dropdown>
   </nav>);
 }
@@ -59,8 +59,8 @@ function App() {
       <Navbar />
       <div style={{ maxWidth: 1140 }} className="container-fluid">
         <Route exact path="/" component={PhylotreeApplication} />
-        <Route path="/example1" component={Example1} />
-        <Route path="/example2" component={Example2} />
+        <Route path="/mwe" component={MWE} />
+        <Route path="/vanilla" component={Vanilla} />
       </div>
     </div>
   </BrowserRouter>);

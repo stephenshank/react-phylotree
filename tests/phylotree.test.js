@@ -1,15 +1,19 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import { phylotree } from "phylotree";
 
-import Phylotree from "phylotree.jsx";
-import { yokoyama } from "./data.js";
+import MWE from "app/mwe.jsx";
+import Vanilla from "app/vanilla.jsx";
 
+it('mwe renders correctly', () => {
+  const mwe = renderer
+    .create(<MWE />)
+    .toJSON();
+  expect(mwe).toMatchSnapshot();
+});
 
-it('base phylotree renders correctly', () => {
-  const tree = new phylotree(yokoyama),
-    base_tree = renderer
-      .create(<Phylotree tree={tree} />)
-      .toJSON();
-  expect(base_tree).toMatchSnapshot();
+it('vanilla renders correctly', () => {
+  const mwe = renderer
+    .create(<MWE />)
+    .toJSON();
+  expect(mwe).toMatchSnapshot();
 });
