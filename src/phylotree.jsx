@@ -61,7 +61,7 @@ function Phylotree(props) {
     y_scale = scaleLinear()
       .domain([0, tree.max_y])
       .range([0, padded_height]);
-  return (<g transform={`translate(${props.paddingLeft}, ${props.paddingRight})`}>
+  return (<g transform={`translate(${props.paddingLeft}, ${props.paddingTop})`}>
     {tree.links.map(link => {
       const source_id = link.source.unique_id,
         target_id = link.target.unique_id,
@@ -90,3 +90,6 @@ Phylotree.defaultProps = {
 };
 
 export default Phylotree;
+export {
+  placenodes
+};
