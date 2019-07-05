@@ -15,7 +15,7 @@ function Vanilla() {
         paddingBottom={1}
         paddingLeft={0}
         paddingRight={0}
-        show_labels={false}
+        showLabels={false}
       />
     </SVG>
   </div>);

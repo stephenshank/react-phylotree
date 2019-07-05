@@ -7,6 +7,8 @@ import PhylotreeApplication from "./PhylotreeApplication.jsx";
 import MWE from "./app/mwe.jsx";
 import Vanilla from "./app/vanilla.jsx";
 import NoBranchLengths from "./app/no_branch_lengths.jsx";
+import InternalNodeLabels from "./app/internal_node_labels.jsx";
+import InternalNodeLabelsBranchLengths from "./app/internal_node_labels_branch_lengths.jsx";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -51,6 +53,8 @@ function Navbar() {
       <Link to="/mwe" header="Minimal working example" />
       <Link to="/vanilla" header="Vanilla" />
       <Link to="/no-branch-lengths" header="No branch lengths" />
+      <Link to="/internal-node-labels" header="Internal node labels" />
+      <Link to="/internal-node-labels-branch-lengths" header="Internal node labels (branch lengths)" />
     </Dropdown>
   </nav>);
 }
@@ -64,6 +68,8 @@ function App() {
         <Route path="/mwe" component={MWE} />
         <Route path="/vanilla" component={Vanilla} />
         <Route path="/no-branch-lengths" component={NoBranchLengths} />
+        <Route path="/internal-node-labels" component={InternalNodeLabels} />
+        <Route path="/internal-node-labels-branch-lengths" component={InternalNodeLabelsBranchLengths} />
       </div>
     </div>
   </BrowserRouter>);
