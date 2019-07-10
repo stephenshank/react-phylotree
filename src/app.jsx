@@ -9,6 +9,7 @@ import Vanilla from "./app/vanilla.jsx";
 import NoBranchLengths from "./app/no_branch_lengths.jsx";
 import InternalNodeLabels from "./app/internal_node_labels.jsx";
 import InternalNodeLabelsBranchLengths from "./app/internal_node_labels_branch_lengths.jsx";
+import HighlightBranches from "./app/highlight_branches.jsx";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -55,6 +56,7 @@ function Navbar() {
       <Link to="/no-branch-lengths" header="No branch lengths" />
       <Link to="/internal-node-labels" header="Internal node labels" />
       <Link to="/internal-node-labels-branch-lengths" header="Internal node labels (branch lengths)" />
+      <Link to="/highlight-branches" header="Highlighted branches" />
     </Dropdown>
   </nav>);
 }
@@ -70,6 +72,7 @@ function App() {
         <Route path="/no-branch-lengths" component={NoBranchLengths} />
         <Route path="/internal-node-labels" component={InternalNodeLabels} />
         <Route path="/internal-node-labels-branch-lengths" component={InternalNodeLabelsBranchLengths} />
+        <Route path="/highlight-branches" component={HighlightBranches} />
       </div>
     </div>
   </BrowserRouter>);

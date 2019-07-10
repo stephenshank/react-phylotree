@@ -1,6 +1,7 @@
 import React from "react";
 import { phylotree } from "phylotree";
-import { scaleLinear } from "d3-scale";
+import { scaleLinear, scaleOrdinal } from "d3-scale";
+import { schemeCategory10 } from "d3-scale-chromatic";
 import text_width from "./text_width";
 
 import Branch from "./branch.jsx";
@@ -93,7 +94,10 @@ function Phylotree(props) {
       .range([0, padded_width-text_offset]),
     y_scale = scaleLinear()
       .domain([0, tree.max_y])
-      .range([0, padded_height]);
+      .range([0, padded_height]),
+    color_scale = tree.parsed_tags && props.highlightBranches ? 
+      scaleOrdinal().domain(tree.parsed_tags).range(schemeCategory10) :
+      null;
   return (<g transform={`translate(${props.paddingLeft}, ${props.paddingTop})`}>
     {tree.links.map(link => {
       const source_id = link.source.unique_id,
@@ -105,6 +109,7 @@ function Phylotree(props) {
         key={key}
         xScale={x_scale}
         yScale={y_scale}
+        colorScale={color_scale}
         link={link}
         maxBranchWidth={padded_width}
         showLabel={show_label}

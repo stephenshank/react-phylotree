@@ -5,7 +5,7 @@ import { line } from "d3-shape";
 
 
 function Branch(props) {
-  const { xScale, yScale, maxBranchWidth, showLabel } = props,
+  const { xScale, yScale, colorScale, maxBranchWidth, showLabel } = props,
     { source, target } = props.link,
     source_x = xScale(source.data.abstract_x),
     source_y = yScale(source.data.abstract_y),
@@ -20,11 +20,15 @@ function Branch(props) {
     ],
     branch_line = line()
       .x(d=>d[0])
-      .y(d=>d[1]);
+      .y(d=>d[1]),
+    branch_style = target.data.annotation && colorScale ? {
+      stroke: colorScale(target.data.annotation)
+    } : undefined;
   return (<g className="node">
     <path
       className="branch"
       d={branch_line(data)}
+      style={branch_style}
     />
     {showLabel ? <line
       x1={target_x}
