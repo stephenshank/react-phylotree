@@ -2,9 +2,10 @@ import React from "react";
 import { phylotree } from "phylotree";
 import { scaleLinear, scaleOrdinal } from "d3-scale";
 import { schemeCategory10 } from "d3-scale-chromatic";
-import text_width from "./text_width";
+import _ from "underscore";
 
 import Branch from "./branch.jsx";
+import text_width from "./text_width";
 
 import "phylotree/build/phylotree.css";
 
@@ -74,6 +75,20 @@ function placenodes(tree, perform_internal_layout) {
 }
 
 
+function getColorScale(tree, highlightBranches) {
+  if(!highlightBranches) return null;
+  if(typeof highlightBranches === "boolean") {
+    return tree.parsed_tags && highlightBranches ? 
+        scaleOrdinal().domain(tree.parsed_tags).range(schemeCategory10) :
+        null
+  }
+  const pairs = _.pairs(highlightBranches);
+  return scaleOrdinal()
+    .domain(pairs.map(p => p[0]))
+    .range(pairs.map(p => p[1]));
+}
+
+
 function Phylotree(props) {
   var{ tree, newick } = props;
   if (!tree && !newick) {
@@ -95,9 +110,7 @@ function Phylotree(props) {
     y_scale = scaleLinear()
       .domain([0, tree.max_y])
       .range([0, padded_height]),
-    color_scale = tree.parsed_tags && props.highlightBranches ? 
-      scaleOrdinal().domain(tree.parsed_tags).range(schemeCategory10) :
-      null;
+    color_scale = getColorScale(tree, props.highlightBranches);
   return (<g transform={`translate(${props.paddingLeft}, ${props.paddingTop})`}>
     {tree.links.map(link => {
       const source_id = link.source.unique_id,

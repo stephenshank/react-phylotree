@@ -1197,6 +1197,18 @@ exports[`tree with highlighted branches 1`] = `
   <h1>
     Highlighted branches
   </h1>
+  <h4>
+    Default
+  </h4>
+  <p>
+    Uses 
+    <a
+      href="https://github.com/d3/d3-scale-chromatic#schemeCategory10"
+    >
+      d3.schemeCategory10
+    </a>
+    .
+  </p>
   <svg
     height={500}
     style={
@@ -1534,6 +1546,372 @@ exports[`tree with highlighted branches 1`] = `
           style={
             Object {
               "stroke": "#ff7f0e",
+            }
+          }
+        />
+        <line
+          className="branch-tracer"
+          x1={269.2992309219462}
+          x2={432.9931640625}
+          y1={373.3333333333333}
+          y2={373.3333333333333}
+        />
+        <text
+          alignmentBaseline="middle"
+          className="label"
+          textAnchor="end"
+          x={480}
+          y={373.3333333333333}
+        >
+          Chimp
+        </text>
+      </g>
+    </g>
+  </svg>
+  <hr />
+  <h4>
+    Custom
+  </h4>
+  <p>
+    Requires foreknowledge of annotations.
+  </p>
+  <svg
+    height={500}
+    style={
+      Object {
+        "borderColor": "lightgrey",
+        "borderStyle": "solid",
+        "borderWidth": 1,
+      }
+    }
+    width={500}
+  >
+    <g
+      transform="translate(10, 10)"
+    >
+      <g
+        className="node"
+      >
+        <path
+          className="branch"
+          d="M0,367.4074074074074L0,195.55555555555554L201.5630784193027,195.55555555555554"
+        />
+      </g>
+      <g
+        className="node"
+      >
+        <path
+          className="branch"
+          d="M0,367.4074074074074L0,426.66666666666663L30.138471458767345,426.66666666666663"
+        />
+        <line
+          className="branch-tracer"
+          x1={30.138471458767345}
+          x2={449.7958984375}
+          y1={426.66666666666663}
+          y2={426.66666666666663}
+        />
+        <text
+          alignmentBaseline="middle"
+          className="label"
+          textAnchor="end"
+          x={480}
+          y={426.66666666666663}
+        >
+          Rat
+        </text>
+      </g>
+      <g
+        className="node"
+      >
+        <path
+          className="branch"
+          d="M0,367.4074074074074L0,480L57.93130184438677,480"
+        />
+        <line
+          className="branch-tracer"
+          x1={57.93130184438677}
+          x2={432.9931640625}
+          y1={480}
+          y2={480}
+        />
+        <text
+          alignmentBaseline="middle"
+          className="label"
+          textAnchor="end"
+          x={480}
+          y={480}
+        >
+          Mouse
+        </text>
+      </g>
+      <g
+        className="node"
+      >
+        <path
+          className="branch"
+          d="M201.5630784193027,195.55555555555554L201.5630784193027,97.77777777777777L236.2278209655136,97.77777777777777"
+        />
+      </g>
+      <g
+        className="node"
+      >
+        <path
+          className="branch"
+          d="M201.5630784193027,195.55555555555554L201.5630784193027,293.33333333333337L261.80453508762184,293.33333333333337"
+        />
+      </g>
+      <g
+        className="node"
+      >
+        <path
+          className="branch"
+          d="M236.2278209655136,97.77777777777777L236.2278209655136,26.666666666666664L286.55855966541634,26.666666666666664"
+          style={
+            Object {
+              "stroke": "red",
+            }
+          }
+        />
+      </g>
+      <g
+        className="node"
+      >
+        <path
+          className="branch"
+          d="M236.2278209655136,97.77777777777777L236.2278209655136,106.66666666666666L334.2804676104891,106.66666666666666"
+          style={
+            Object {
+              "stroke": "red",
+            }
+          }
+        />
+        <line
+          className="branch-tracer"
+          x1={334.2804676104891}
+          x2={432.9931640625}
+          y1={106.66666666666666}
+          y2={106.66666666666666}
+        />
+        <text
+          alignmentBaseline="middle"
+          className="label"
+          textAnchor="end"
+          x={480}
+          y={106.66666666666666}
+        >
+          Horse
+        </text>
+      </g>
+      <g
+        className="node"
+      >
+        <path
+          className="branch"
+          d="M236.2278209655136,97.77777777777777L236.2278209655136,160L392.8440161283996,160"
+          style={
+            Object {
+              "stroke": "red",
+            }
+          }
+        />
+        <line
+          className="branch-tracer"
+          x1={392.8440161283996}
+          x2={449.7958984375}
+          y1={160}
+          y2={160}
+        />
+        <text
+          alignmentBaseline="middle"
+          className="label"
+          textAnchor="end"
+          x={480}
+          y={160}
+        >
+          Cat
+        </text>
+      </g>
+      <g
+        className="node"
+      >
+        <path
+          className="branch"
+          d="M261.80453508762184,293.33333333333337L261.80453508762184,240L275.2496834779071,240"
+          style={
+            Object {
+              "stroke": "black",
+            }
+          }
+        />
+      </g>
+      <g
+        className="node"
+      >
+        <path
+          className="branch"
+          d="M261.80453508762184,293.33333333333337L261.80453508762184,346.6666666666667L268.8266723698925,346.6666666666667"
+          style={
+            Object {
+              "stroke": "black",
+            }
+          }
+        />
+      </g>
+      <g
+        className="node"
+      >
+        <path
+          className="branch"
+          d="M286.55855966541634,26.666666666666664L286.55855966541634,0L374.072973168347,0"
+          style={
+            Object {
+              "stroke": "red",
+            }
+          }
+        />
+        <line
+          className="branch-tracer"
+          x1={374.072973168347}
+          x2={449.7958984375}
+          y1={0}
+          y2={0}
+        />
+        <text
+          alignmentBaseline="middle"
+          className="label"
+          textAnchor="end"
+          x={480}
+          y={0}
+        >
+          Pig
+        </text>
+      </g>
+      <g
+        className="node"
+      >
+        <path
+          className="branch"
+          d="M286.55855966541634,26.666666666666664L286.55855966541634,53.33333333333333L412.7890625,53.33333333333333"
+          style={
+            Object {
+              "stroke": "red",
+            }
+          }
+        />
+        <line
+          className="branch-tracer"
+          x1={412.7890625}
+          x2={449.7958984375}
+          y1={53.33333333333333}
+          y2={53.33333333333333}
+        />
+        <text
+          alignmentBaseline="middle"
+          className="label"
+          textAnchor="end"
+          x={480}
+          y={53.33333333333333}
+        >
+          Cow
+        </text>
+      </g>
+      <g
+        className="node"
+      >
+        <path
+          className="branch"
+          d="M275.2496834779071,240L275.2496834779071,213.33333333333331L276.44143001406275,213.33333333333331"
+          style={
+            Object {
+              "stroke": "black",
+            }
+          }
+        />
+        <line
+          className="branch-tracer"
+          x1={276.44143001406275}
+          x2={407.7890625}
+          y1={213.33333333333331}
+          y2={213.33333333333331}
+        />
+        <text
+          alignmentBaseline="middle"
+          className="label"
+          textAnchor="end"
+          x={480}
+          y={213.33333333333331}
+        >
+          RhMonkey
+        </text>
+      </g>
+      <g
+        className="node"
+      >
+        <path
+          className="branch"
+          d="M275.2496834779071,240L275.2496834779071,266.6666666666667L277.0878711872727,266.6666666666667"
+          style={
+            Object {
+              "stroke": "black",
+            }
+          }
+        />
+        <line
+          className="branch-tracer"
+          x1={277.0878711872727}
+          x2={424.591796875}
+          y1={266.6666666666667}
+          y2={266.6666666666667}
+        />
+        <text
+          alignmentBaseline="middle"
+          className="label"
+          textAnchor="end"
+          x={480}
+          y={266.6666666666667}
+        >
+          Baboon
+        </text>
+      </g>
+      <g
+        className="node"
+      >
+        <path
+          className="branch"
+          d="M268.8266723698925,346.6666666666667L268.8266723698925,320L271.398834000533,320"
+          style={
+            Object {
+              "stroke": "black",
+            }
+          }
+        />
+        <line
+          className="branch-tracer"
+          x1={271.398834000533}
+          x2={432.9931640625}
+          y1={320}
+          y2={320}
+        />
+        <text
+          alignmentBaseline="middle"
+          className="label"
+          textAnchor="end"
+          x={480}
+          y={320}
+        >
+          Human
+        </text>
+      </g>
+      <g
+        className="node"
+      >
+        <path
+          className="branch"
+          d="M268.8266723698925,346.6666666666667L268.8266723698925,373.3333333333333L269.2992309219462,373.3333333333333"
+          style={
+            Object {
+              "stroke": "black",
             }
           }
         />
