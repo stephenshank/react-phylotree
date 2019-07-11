@@ -1,7 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, NavLink } from "react-router-dom";
-import "bootstrap";
+import RBNavbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import { BrowserRouter, Route, Link } from "react-router-dom";
 
 import PhylotreeApplication from "./PhylotreeApplication.jsx";
 import MWE from "./app/mwe.jsx";
@@ -14,51 +16,35 @@ import HighlightBranches from "./app/highlight_branches.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 
-function Link(props) {
-  return (
-    <NavLink className="dropdown-item link" to={props.to}>
-      {props.header}
-    </NavLink>
-  );
+function DropdownLink(props) {
+  return (<NavDropdown.Item as={Link} to={props.to}>
+    {props.header}
+  </NavDropdown.Item>);
 }
 
-function Dropdown(props) {
-  return (
-    <ul className="navbar-nav ">
-      <li className="nav-item dropdown">
-        <a
-          className="nav-link dropdown-toggle"
-          href="#"
-          id="navbarDropdown"
-          role="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          {props.title}
-        </a>
-        <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-          {props.children}
-        </div>
-      </li>
-    </ul>
-  );
+function NavLink(props) {
+  return (<Nav.Link as={Link} to={props.to}>
+    {props.header}
+  </Nav.Link>);
 }
 
 function Navbar() {
-  return (<nav className="navbar navbar-expand-lg navbar-light bg-light">
-    <NavLink className="navbar-brand" to="/">
+  return (<RBNavbar bg="light">
+    <RBNavbar.Brand>
       React Phylotree
-    </NavLink>
-    <Dropdown title="Examples">
-      <Link to="/mwe" header="Minimal working example" />
-      <Link to="/vanilla" header="Vanilla" />
-      <Link to="/no-branch-lengths" header="No branch lengths" />
-      <Link to="/internal-node-labels" header="Internal node labels" />
-      <Link to="/internal-node-labels-branch-lengths" header="Internal node labels (branch lengths)" />
-      <Link to="/highlight-branches" header="Highlighted branches" />
-    </Dropdown>
-  </nav>);
+    </RBNavbar.Brand>
+    <Nav className="mr-auto">
+      <NavLink to="/" header="Application" />
+      <NavDropdown title="Examples">
+        <DropdownLink to="/mwe" header="Minimal working example" />
+        <DropdownLink to="/vanilla" header="Vanilla" />
+        <DropdownLink to="/no-branch-lengths" header="No branch lengths" />
+        <DropdownLink to="/internal-node-labels" header="Internal node labels" />
+        <DropdownLink to="/internal-node-labels-branch-lengths" header="Internal node labels (branch lengths)" />
+        <DropdownLink to="/highlight-branches" header="Highlighted branches" />
+      </NavDropdown>
+    </Nav>
+  </RBNavbar>);
 }
 
 function App() {
@@ -67,7 +53,7 @@ function App() {
       <Navbar />
       <div style={{ maxWidth: 1140 }} className="container-fluid">
         <Route exact path="/" component={PhylotreeApplication} />
-        <Route path="/mwe" component={MWE} />
+        <Route exact path="/mwe" component={MWE} />
         <Route path="/vanilla" component={Vanilla} />
         <Route path="/no-branch-lengths" component={NoBranchLengths} />
         <Route path="/internal-node-labels" component={InternalNodeLabels} />

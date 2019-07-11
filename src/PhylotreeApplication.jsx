@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+import RBButton from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { phylotree } from "phylotree";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { 
@@ -7,28 +11,24 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { text } from "d3-fetch";
 import { max } from "d3-array";
-import $ from "jquery";
 
 import Phylotree from "./phylotree.jsx";
 
 
-function ButtonGroup(props) {
-  return (<div className="btn-group" role="group" aria-label="Button group">
-    {props.children}
-  </div>);
-}
-
 function Button(props) {
-  return (<button
-    type="button"
-    className="btn btn-secondary react-phylotree-button"
-    data-toggle="tooltip"
-    data-placement="top"
-    trigger="hover"
-    {...props}
+  return (<OverlayTrigger
+    placement="top"
+    overlay={<Tooltip>
+      {props.title}
+    </Tooltip>}
   >
-    {props.children}
-  </button>);
+    <RBButton
+      variant="secondary"
+      {...props}
+    >
+      {props.children}
+    </RBButton>
+  </OverlayTrigger>);
 }
 
 function HorizontalExpansionButton(props) {
@@ -140,9 +140,6 @@ class PhylotreeApplication extends Component {
     };
   }
   componentDidMount() {
-    $(function () {
-      $(".react-phylotree-button").tooltip();
-    });
     text("data/CD2.new")
       .then(newick => {
         const tree = new phylotree(newick);
