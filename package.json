@@ -1,6 +1,6 @@
 {
   "name": "react-phylotree",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "main": "lib/bundle.js",
   "repository": "https://github.com/stephenshank/react-phylotree",
   "author": "Stephen Shank <sshank314@gmail.com>",
@@ -11,7 +11,7 @@
     "@fortawesome/react-fontawesome": "^0.1.3",
     "bootstrap": "^4.1.3",
     "d3": "^5.7.0",
-    "phylotree": "file:.yalc/phylotree",
+    "phylotree": "1.0.0-alpha.17",
     "react": "^16.6.3",
     "react-bootstrap": "^1.0.0-beta.9",
     "react-dom": "^16.6.3",

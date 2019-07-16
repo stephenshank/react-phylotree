@@ -5967,8 +5967,10 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
-"phylotree@file:.yalc/phylotree":
-  version "1.0.0-alpha.14-93aee38f"
+phylotree@1.0.0-alpha.17:
+  version "1.0.0-alpha.17"
+  resolved "https://registry.yarnpkg.com/phylotree/-/phylotree-1.0.0-alpha.17.tgz#9f7eb61cf991aa01da54e67ddc21ba1f4ce37c2c"
+  integrity sha512-AK8Y+IKADZPV20wZ49Amq7brM6KGZpKMUKDza0OUYbZS0pqbSD7e/Vy1wNVcAFbuVD7H/P5Vua6A2fGWPGAz/Q==
   dependencies:
     bootstrap "4"
     commander "^2.19.0"
