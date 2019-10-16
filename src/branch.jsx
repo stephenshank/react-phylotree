@@ -11,7 +11,7 @@ function Branch(props) {
     source_y = yScale(source.data.abstract_y),
     target_x = xScale(target.data.abstract_x),
     target_y = yScale(target.data.abstract_y),
-    text_label_width = text_width(target.data.name, 14),
+    text_label_width = text_width(target.data.name, 14, props.maxLabelWidth),
     tracer_x2 = maxBranchWidth - text_label_width - 5,
     data = [
       [source_x, source_y],
@@ -43,7 +43,7 @@ function Branch(props) {
       textAnchor="end"
       alignmentBaseline="middle"
       className="label"
-    >{target.data.name}</text> : null}
+    >{target.data.name.slice(0, props.maxLabelWidth)}</text> : null}
   </g>);
 }
 

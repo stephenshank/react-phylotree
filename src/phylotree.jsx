@@ -79,8 +79,8 @@ function getColorScale(tree, highlightBranches) {
   if(!highlightBranches) return null;
   if(typeof highlightBranches === "boolean") {
     return tree.parsed_tags && highlightBranches ? 
-        scaleOrdinal().domain(tree.parsed_tags).range(schemeCategory10) :
-        null
+      scaleOrdinal().domain(tree.parsed_tags).range(schemeCategory10) :
+      null;
   }
   const pairs = _.pairs(highlightBranches);
   return scaleOrdinal()
@@ -100,7 +100,7 @@ function Phylotree(props) {
     placenodes(tree, props.internalNodeLabels);
   }
   const text_offset = props.showLabels ? tree.get_tips()
-      .map(node => text_width(node.data.name, 14))
+      .map(node => text_width(node.data.name, 14, props.maxLabelWidth))
       .reduce((a,b) => Math.max(a,b), 0) : 0,
     padded_width = props.width - props.paddingLeft - props.paddingRight,
     padded_height = props.height - props.paddingTop - props.paddingBottom,
@@ -126,6 +126,7 @@ function Phylotree(props) {
         link={link}
         maxBranchWidth={padded_width}
         showLabel={show_label}
+        maxLabelWidth={props.maxLabelWidth}
       />);
     }) }
   </g>);
@@ -139,7 +140,8 @@ Phylotree.defaultProps = {
   paddingLeft: 10,
   paddingRight: 10,
   showLabels: true,
-  skipPlacement: false
+  skipPlacement: false,
+  maxLabelWidth: 20
 };
 
 export default Phylotree;
