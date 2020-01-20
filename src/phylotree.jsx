@@ -7,9 +7,6 @@ import _ from "underscore";
 import Branch from "./branch.jsx";
 import text_width from "./text_width";
 
-import "phylotree/build/phylotree.css";
-
-import "./styles/phylotree.css";
 
 function x_branch_lengths(node) {
   return node.parent ? +node.data.attribute + node.parent.data.abstract_x : 0;

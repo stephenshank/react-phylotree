@@ -1,7 +1,7 @@
 {
   "name": "react-phylotree",
   "version": "0.2.0",
-  "main": "lib/bundle.js",
+  "main": "lib/library.js",
   "repository": "https://github.com/stephenshank/react-phylotree",
   "author": "Stephen Shank <sshank314@gmail.com>",
   "license": "MIT",
@@ -26,6 +26,7 @@
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.8.0",
     "babel-loader": "^8.0.4",
+    "babel-plugin-convert-jsx-extension-to-js": "^0.0.1",
     "css-loader": "^2.0.0",
     "eslint": "^5.10.0",
     "eslint-plugin-react": "^7.11.1",
@@ -42,10 +43,10 @@
     "develop": "npx webpack-dev-server --mode=development --open",
     "build": "webpack --devtool=none",
     "serve": "node src/server.js",
-    "library": "npx webpack --devtool=none --config=webpack.lib.config.js",
+    "library": "BABEL_ENV=library npx babel --out-dir lib src",
     "test": "jest --watch"
   },
   "files": [
-    "lib/bundle.js"
+    "lib"
   ]
 }
