@@ -1,18 +1,18 @@
 import React from "react";
-import text_width from "./text_width";
 
 import { line } from "d3-shape";
 
 
 function Branch(props) {
-  const { xScale, yScale, colorScale, maxBranchWidth, showLabel } = props,
+  const { xScale, yScale, colorScale, showLabel } = props,
     { source, target } = props.link,
     source_x = xScale(source.data.abstract_x),
     source_y = yScale(source.data.abstract_y),
     target_x = xScale(target.data.abstract_x),
     target_y = yScale(target.data.abstract_y),
-    text_label_width = text_width(target.data.name, 14, props.maxLabelWidth),
-    tracer_x2 = maxBranchWidth - text_label_width - 5,
+    tracer_x2 = props.alignTips == "right" ?
+      props.paddedWidth - (target.data.text_width || 0) :
+      target_x,
     data = [
       [source_x, source_y],
       [source_x, target_y],
@@ -38,9 +38,9 @@ function Branch(props) {
       className="branch-tracer"
     /> : null}
     {showLabel ? <text
-      x={maxBranchWidth}
+      x={tracer_x2 + 5}
       y={target_y}
-      textAnchor="end"
+      textAnchor="start"
       alignmentBaseline="middle"
       className="label"
     >{target.data.name.slice(0, props.maxLabelWidth)}</text> : null}

@@ -136,7 +136,8 @@ class PhylotreeApplication extends Component {
     this.state = {
       tree: null,
       width: 500,
-      height: 500
+      height: 500,
+      alignTips: "right"
     };
   }
   componentDidMount() {
@@ -157,6 +158,9 @@ class PhylotreeApplication extends Component {
     const { tree } = this.state;
     sort_nodes(tree, direction);
     this.setState({tree});
+  }
+  alignTips(direction) {
+    this.setState({alignTips: direction});
   }
   render() {
     return (<div style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}}>

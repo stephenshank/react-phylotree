@@ -99,14 +99,36 @@ function Phylotree(props) {
   if(!props.skipPlacement) {
     placenodes(tree, props.internalNodeLabels);
   }
-  const text_offset = props.showLabels ? tree.get_tips()
-      .map(node => text_width(node.data.name, 14, props.maxLabelWidth))
-      .reduce((a,b) => Math.max(a,b), 0) : 0,
-    padded_width = props.width - props.paddingLeft - props.paddingRight,
+
+  function attachTextWidth(node) {
+    node.data.text_width = text_width(node.data.name, 14, props.maxLabelWidth);
+    if(node.children) node.children.forEach(attachTextWidth);
+  }
+  attachTextWidth(tree.nodes);
+  const padded_width = props.width - props.paddingLeft - props.paddingRight,
     padded_height = props.height - props.paddingTop - props.paddingBottom,
-    x_scale = scaleLinear()
+    sorted_tips = tree.get_tips().sort((a,b) => (
+      b.data.abstract_x - a.data.abstract_x
+    ));
+  var rightmost;
+  if (!props.showLabels) rightmost = padded_width;
+  else {
+    for(let i=0; i < sorted_tips.length; i++) {
+      let tip = sorted_tips[i];
+      rightmost = padded_width - tip.data.text_width;
+      let scale = rightmost / tip.data.abstract_x;
+      let none_cross = sorted_tips.map(tip => {
+        const tip_x = tip.data.abstract_x * scale,
+          text_x = padded_width - tip.data.text_width,
+          this_doesnt_cross = Math.floor(tip_x) < Math.ceil(text_x);
+        return this_doesnt_cross;
+      }).every(x => x);
+      if(none_cross) break;
+    }
+  }
+  const x_scale = scaleLinear()
       .domain([0, tree.max_x])
-      .range([0, padded_width-text_offset]),
+      .range([0, rightmost]),
     y_scale = scaleLinear()
       .domain([0, tree.max_y])
       .range([0, padded_height]),
@@ -124,9 +146,10 @@ function Phylotree(props) {
         yScale={y_scale}
         colorScale={color_scale}
         link={link}
-        maxBranchWidth={padded_width}
         showLabel={show_label}
         maxLabelWidth={props.maxLabelWidth}
+        paddedWidth={padded_width}
+        alignTips={props.alignTips}
       />);
     }) }
   </g>);
@@ -141,7 +164,8 @@ Phylotree.defaultProps = {
   paddingRight: 10,
   showLabels: true,
   skipPlacement: false,
-  maxLabelWidth: 20
+  maxLabelWidth: 20,
+  alignTips: "right"
 };
 
 export default Phylotree;

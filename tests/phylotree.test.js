@@ -9,42 +9,42 @@ import InternalNodeLabelsBranchLengths from "app/internal_node_labels_branch_len
 import HighlightBranches from "app/highlight_branches.jsx";
 
 
-it("mwe", () => {
+test("mwe", () => {
   const mwe = renderer
     .create(<MWE />)
     .toJSON();
   expect(mwe).toMatchSnapshot();
 });
 
-it("vanilla", () => {
+test("vanilla", () => {
   const vanilla = renderer
     .create(<Vanilla />)
     .toJSON();
   expect(vanilla).toMatchSnapshot();
 });
 
-it("tree without branches", () => {
+test("tree without branches", () => {
   const no_branch_lengths = renderer
     .create(<NoBranchLengths />)
     .toJSON();
   expect(no_branch_lengths).toMatchSnapshot();
 });
 
-it("tree with internal node labels", () => {
+test("tree with internal node labels", () => {
   const internal_node_labels = renderer
     .create(<InternalNodeLabels />)
     .toJSON();
   expect(internal_node_labels).toMatchSnapshot();
 });
 
-it("tree with internal node labels and branch lengths", () => {
+test("tree with internal node labels and branch lengths", () => {
   const internal_node_labels_with_bls = renderer
     .create(<InternalNodeLabelsBranchLengths />)
     .toJSON();
   expect(internal_node_labels_with_bls).toMatchSnapshot();
 });
 
-it("tree with highlighted branches", () => {
+test("tree with highlighted branches", () => {
   const highlight_branches = renderer
     .create(<HighlightBranches/>)
     .toJSON();
