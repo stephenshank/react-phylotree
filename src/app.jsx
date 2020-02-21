@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import RBNavbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
 
 import PhylotreeApplication from "./PhylotreeApplication.jsx";
 import MWE from "./app/mwe.jsx";
@@ -52,13 +52,29 @@ function App() {
     <div>
       <Navbar />
       <div style={{ maxWidth: 1140 }} className="container-fluid">
-        <Route exact path="/" component={PhylotreeApplication} />
-        <Route exact path="/mwe" component={MWE} />
-        <Route path="/vanilla" component={Vanilla} />
-        <Route path="/no-branch-lengths" component={NoBranchLengths} />
-        <Route path="/internal-node-labels" component={InternalNodeLabels} />
-        <Route path="/internal-node-labels-branch-lengths" component={InternalNodeLabelsBranchLengths} />
-        <Route path="/highlight-branches" component={HighlightBranches} />
+        <Switch>
+          <Route path="/vanilla">
+            <Vanilla />
+          </Route>
+          <Route path="/no-branch-lengths">
+            <NoBranchLengths />
+          </Route>
+          <Route path="/internal-node-labels">
+            <InternalNodeLabels />
+          </Route>
+          <Route path="/internal-node-labels-branch-lengths">
+            <InternalNodeLabelsBranchLengths />
+          </Route>
+          <Route path="/highlight-branches">
+            <HighlightBranches />
+          </Route>
+          <Route path="/mwe">
+            <MWE />
+          </Route>
+          <Route path="/">
+            <PhylotreeApplication />
+          </Route>
+        </Switch>
       </div>
     </div>
   </BrowserRouter>);
