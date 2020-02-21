@@ -2,7 +2,7 @@
   "presets": ["@babel/preset-react"],
   "env": {
     "test": {
-      "presets": ["@babel/preset-react"]
+      "presets": ["@babel/preset-env", "@babel/preset-react"]
     },
     "library": {
       "presets": ["@babel/preset-react"],

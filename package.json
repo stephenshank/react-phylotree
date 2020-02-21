@@ -44,7 +44,7 @@
     "build": "webpack --devtool=none",
     "serve": "node src/server.js",
     "library": "BABEL_ENV=library npx babel --out-dir lib src",
-    "test": "jest --watch"
+    "test": "BABEL_ENV=test npx jest"
   },
   "files": [
     "lib"
