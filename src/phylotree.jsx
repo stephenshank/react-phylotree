@@ -8,26 +8,27 @@ import Branch from "./branch.jsx";
 import text_width from "./text_width";
 
 
-function x_branch_lengths(node) {
-  return node.parent ? +node.data.attribute + node.parent.data.abstract_x : 0;
+function x_branch_lengths(node, accessor) {
+  if (!node.parent) return 0;
+  const bl = accessor(node);
+  return  bl + node.parent.data.abstract_x;
 }
 
 function x_no_branch_lengths(node) {
   return node.parent ? node.parent.data.abstract_x + 1 : 0;
 }
 
-function placenodes(tree, perform_internal_layout) {
+function placenodes(tree, perform_internal_layout, accessor) {
   var current_leaf_height = -1,
     unique_id = 0;
   tree.max_x = 0;
-  const has_branch_lengths = Boolean(tree.get_tips()[0].data.attribute),
+  const has_branch_lengths = Boolean(accessor(tree.get_tips()[0])),
     x_branch_length = has_branch_lengths ? x_branch_lengths : x_no_branch_lengths;
-
   function node_layout(node) {
     if(!node.unique_id) {
       unique_id = node.unique_id = unique_id + 1;
     }
-    node.data.abstract_x = x_branch_length(node);
+    node.data.abstract_x = x_branch_length(node, accessor);
     tree.max_x = Math.max(tree.max_x, node.data.abstract_x);
     if(node.children) {
       node.data.abstract_y = node.children.map(node_layout)
@@ -40,7 +41,7 @@ function placenodes(tree, perform_internal_layout) {
 
   function internal_node_layout(node) {
     unique_id = node.unique_id = unique_id + 1;
-    node.data.abstract_x = x_branch_length(node);
+    node.data.abstract_x = x_branch_length(node, accessor);
     tree.max_x = Math.max(tree.max_x, node.data.abstract_x);
     if(!tree.is_leafnode(node)) {
       node.children.forEach(internal_node_layout);
@@ -94,7 +95,7 @@ function Phylotree(props) {
     tree = new phylotree(newick);
   }
   if(!props.skipPlacement) {
-    placenodes(tree, props.internalNodeLabels);
+    placenodes(tree, props.internalNodeLabels, props.accessor);
   }
 
   function attachTextWidth(node) {
@@ -162,7 +163,8 @@ Phylotree.defaultProps = {
   showLabels: true,
   skipPlacement: false,
   maxLabelWidth: 20,
-  alignTips: "right"
+  alignTips: "right",
+  accessor: node => +node.data.attribute
 };
 
 export default Phylotree;
