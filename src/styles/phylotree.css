@@ -1,5 +1,7 @@
 path.branch {
   transition: d 0.5s;
+  fill: none;
+  shape-rendering: crispEdges;
 }
 
 .branch-tracer {
@@ -14,3 +16,10 @@ text.label {
   font-family: Courier;
   font-size: 14px;
 }
+
+.branch-tracer {
+  stroke: #bbb;
+  stroke-dasharray: 3,4;
+  stroke-width: 1px;
+}
+

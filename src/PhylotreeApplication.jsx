@@ -14,8 +14,6 @@ import { max } from "d3-array";
 
 import Phylotree from "./phylotree.jsx";
 
-import "phylotree/build/phylotree.css";
-
 import "./styles/phylotree.css";
 
 

@@ -21,14 +21,16 @@ function Branch(props) {
     branch_line = line()
       .x(d=>d[0])
       .y(d=>d[1]),
-    branch_style = target.data.annotation && colorScale ? {
+    branch_style = props.branchStyler ?
+      props.branchStyler(target.data) :
+    target.data.annotation && colorScale ? {
       stroke: colorScale(target.data.annotation)
-    } : undefined;
+    } : {};
   return (<g className="node">
     <path
       className="branch"
       d={branch_line(data)}
-      style={branch_style}
+      {...Object.assign({}, props.style, branch_style)}
     />
     {showLabel ? <line
       x1={target_x}
@@ -45,6 +47,13 @@ function Branch(props) {
       className="label"
     >{target.data.name.slice(0, props.maxLabelWidth)}</text> : null}
   </g>);
+}
+
+Branch.defaultProps = {
+  style: {
+    strokeWidth: 2,
+    stroke: "grey"
+  }
 }
 
 export default Branch;

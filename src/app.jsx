@@ -12,6 +12,7 @@ import NoBranchLengths from "./app/no_branch_lengths.jsx";
 import InternalNodeLabels from "./app/internal_node_labels.jsx";
 import InternalNodeLabelsBranchLengths from "./app/internal_node_labels_branch_lengths.jsx";
 import HighlightBranches from "./app/highlight_branches.jsx";
+import StyleBranches from "./app/style_branches.jsx";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -42,6 +43,7 @@ function Navbar() {
         <DropdownLink to="/internal-node-labels" header="Internal node labels" />
         <DropdownLink to="/internal-node-labels-branch-lengths" header="Internal node labels (branch lengths)" />
         <DropdownLink to="/highlight-branches" header="Highlighted branches" />
+        <DropdownLink to="/style-branches" header="Style branches" />
       </NavDropdown>
     </Nav>
   </RBNavbar>);
@@ -67,6 +69,9 @@ function App() {
           </Route>
           <Route path="/highlight-branches">
             <HighlightBranches />
+          </Route>
+          <Route path="/style-branches">
+            <StyleBranches />
           </Route>
           <Route path="/mwe">
             <MWE />
