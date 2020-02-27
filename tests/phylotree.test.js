@@ -23,7 +23,7 @@ test("vanilla", () => {
   expect(vanilla).toMatchSnapshot();
 });
 
-test("tree without branches", () => {
+test("tree without branch lengths", () => {
   const no_branch_lengths = renderer
     .create(<NoBranchLengths />)
     .toJSON();
