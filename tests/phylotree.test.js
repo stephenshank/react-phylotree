@@ -7,7 +7,7 @@ import NoBranchLengths from "app/no_branch_lengths.jsx";
 import InternalNodeLabels from "app/internal_node_labels.jsx";
 import InternalNodeLabelsBranchLengths from "app/internal_node_labels_branch_lengths.jsx";
 import HighlightBranches from "app/highlight_branches.jsx";
-import StyledBranches from "app/style_branches.jsx";
+import { ContinuouslyColored, ThickBranches } from "app/style_branches.jsx";
 
 
 test("mwe", () => {
@@ -54,7 +54,14 @@ test("tree with highlighted branches", () => {
 
 test("tree with continuously colored branches", () => {
   const highlight_branches = renderer
-    .create(<HighlightBranches/>)
+    .create(<ContinuouslyColored />)
+    .toJSON();
+  expect(highlight_branches).toMatchSnapshot();
+});
+
+test("tree with thick branches", () => {
+  const highlight_branches = renderer
+    .create(<ThickBranches />)
     .toJSON();
   expect(highlight_branches).toMatchSnapshot();
 });

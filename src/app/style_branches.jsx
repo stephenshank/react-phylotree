@@ -11,7 +11,7 @@ function accessor(node) {
   return bl;
 }
 
-function StyleBranches() {
+function ContinuouslyColored() {
   const size_props = { width: 500, height: 500 },
     newick = aBSRELData.input.trees[0],
     branch_dict = aBSRELData["branch attributes"]["0"],
@@ -25,17 +25,46 @@ function StyleBranches() {
       stroke: color_scale(omega)
     };
   }
+  return (<SVG {...size_props}>
+    <Phylotree
+      newick={newick}
+      {...size_props}
+      accessor={accessor}
+      branchStyler={branchStyler}
+    />
+  </SVG>)
+}
+
+function ThickBranches() {
+  const size_props = { width: 500, height: 500 },
+    newick = aBSRELData.input.trees[0],
+    branch_dict = aBSRELData["branch attributes"]["0"];
+  function branchStyler(branch) {
+    const name = branch.name,
+      p_value = branch_dict[name]["Corrected P-value"];
+    return {
+      strokeWidth: p_value < .05 ? 5 : 2
+    };
+  }
+  return (<SVG {...size_props}>
+    <Phylotree
+      newick={newick}
+      {...size_props}
+      accessor={accessor}
+      branchStyler={branchStyler}
+    />
+  </SVG>)
+}
+
+function StyleBranches() {
   return (<div>
     <h1>Styled branches</h1>
-    <SVG {...size_props}>
-      <Phylotree
-        newick={newick}
-        {...size_props}
-        accessor={accessor}
-        branchStyler={branchStyler}
-      />
-    </SVG>
+    <h2>Continuously colored</h2>
+    <ContinuouslyColored />
+    <h2>Thick branches</h2>
+    <ThickBranches />
   </div>)
 }
 
 export default StyleBranches;
+export { ContinuouslyColored, ThickBranches };
