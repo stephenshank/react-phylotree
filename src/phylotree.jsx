@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { phylotree } from "phylotree";
 import { scaleLinear, scaleOrdinal } from "d3-scale";
 import { schemeCategory10 } from "d3-scale-chromatic";
@@ -88,6 +88,7 @@ function getColorScale(tree, highlightBranches) {
 
 
 function Phylotree(props) {
+  const [tooltip, setTooltip] = useState(false);
   var{ tree, newick } = props;
   if (!tree && !newick) {
     return <g />;
@@ -130,8 +131,9 @@ function Phylotree(props) {
     y_scale = scaleLinear()
       .domain([0, tree.max_y])
       .range([0, padded_height]),
-    color_scale = getColorScale(tree, props.highlightBranches);
-  return (<g transform={`translate(${props.paddingLeft}, ${props.paddingTop})`}>
+    color_scale = getColorScale(tree, props.highlightBranches),
+    transform = `translate(${props.paddingLeft}, ${props.paddingTop})`;
+  return (<g transform={transform}>
     {tree.links.map(link => {
       const source_id = link.source.unique_id,
         target_id = link.target.unique_id,
@@ -150,8 +152,15 @@ function Phylotree(props) {
         alignTips={props.alignTips}
         branchStyler={props.branchStyler}
         labelStyler={props.labelStyler}
+        tooltip={props.tooltip}
+        setTooltip={setTooltip}
       />);
     }) }
+    { tooltip ? <props.tooltip
+      width={props.width}
+      height={props.height}
+      {...tooltip}
+    /> : null }
   </g>);
 }
 
@@ -168,7 +177,8 @@ Phylotree.defaultProps = {
   alignTips: "right",
   accessor: node => +node.data.attribute,
   branchStyler: null,
-  labelStyler: null
+  labelStyler: null,
+  tooltip: null
 };
 
 export default Phylotree;

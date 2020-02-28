@@ -4,7 +4,8 @@ import { line } from "d3-shape";
 
 
 function Branch(props) {
-  const { xScale, yScale, colorScale, showLabel } = props,
+
+  const { xScale, yScale, colorScale, showLabel, setTooltip } = props,
     { source, target } = props.link,
     source_x = xScale(source.data.abstract_x),
     source_y = yScale(source.data.abstract_y),
@@ -21,19 +22,33 @@ function Branch(props) {
     branch_line = line()
       .x(d=>d[0])
       .y(d=>d[1]),
-    branch_style = props.branchStyler ?
+    computed_branch_styles = props.branchStyler ?
       props.branchStyler(target.data) :
     target.data.annotation && colorScale ? {
       stroke: colorScale(target.data.annotation)
     } : {},
+    all_branch_styles = Object.assign(
+      {}, props.branchStyle, computed_branch_styles
+    ),
     label_style = target.data.name && props.labelStyler ?
       props.labelStyler(target.data) :
       {} ;
-  return (<g className="node">
+  return (<g className="node"
+  >
     <path
       className="branch"
       d={branch_line(data)}
-      {...Object.assign({}, props.branchStyle, branch_style)}
+      {...all_branch_styles}
+      onMouseMove={props.tooltip ? e => {
+        setTooltip({
+          x: e.nativeEvent.offsetX,
+          y: e.nativeEvent.offsetY,
+          data: target.data
+        });
+      } : undefined}
+      onMouseOut={props.tooltip ? e => {
+        setTooltip(false);
+      } : undefined}
     />
     {showLabel ? <line
       x1={target_x}
