@@ -149,6 +149,7 @@ function Phylotree(props) {
         paddedWidth={padded_width}
         alignTips={props.alignTips}
         branchStyler={props.branchStyler}
+        labelStyler={props.labelStyler}
       />);
     }) }
   </g>);
@@ -166,7 +167,8 @@ Phylotree.defaultProps = {
   maxLabelWidth: 20,
   alignTips: "right",
   accessor: node => +node.data.attribute,
-  branchStyler: null
+  branchStyler: null,
+  labelStyler: null
 };
 
 export default Phylotree;

@@ -13,6 +13,7 @@ import InternalNodeLabels from "./app/internal_node_labels.jsx";
 import InternalNodeLabelsBranchLengths from "./app/internal_node_labels_branch_lengths.jsx";
 import HighlightBranches from "./app/highlight_branches.jsx";
 import StyleBranches from "./app/style_branches.jsx";
+import ColoredLabels from "./app/colored_labels.jsx";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -44,6 +45,7 @@ function Navbar() {
         <DropdownLink to="/internal-node-labels-branch-lengths" header="Internal node labels (branch lengths)" />
         <DropdownLink to="/highlight-branches" header="Highlighted branches" />
         <DropdownLink to="/style-branches" header="Style branches" />
+        <DropdownLink to="/colored-labels" header="Colored labels" />
       </NavDropdown>
     </Nav>
   </RBNavbar>);
@@ -55,6 +57,9 @@ function App() {
       <Navbar />
       <div style={{ maxWidth: 1140 }} className="container-fluid">
         <Switch>
+          <Route path="/colored-labels">
+            <ColoredLabels />
+          </Route>
           <Route path="/vanilla">
             <Vanilla />
           </Route>
