@@ -89,6 +89,7 @@ function getColorScale(tree, highlightBranches) {
 
 function Phylotree(props) {
   const [tooltip, setTooltip] = useState(false);
+  const { width, height, maxLabelWidth } = props;
   var{ tree, newick } = props;
   if (!tree && !newick) {
     return <g />;
@@ -100,25 +101,23 @@ function Phylotree(props) {
   }
 
   function attachTextWidth(node) {
-    node.data.text_width = text_width(node.data.name, 14, props.maxLabelWidth);
+    node.data.text_width = text_width(node.data.name, 14, maxLabelWidth);
     if(node.children) node.children.forEach(attachTextWidth);
   }
   attachTextWidth(tree.nodes);
-  const padded_width = props.width - props.paddingLeft - props.paddingRight,
-    padded_height = props.height - props.paddingTop - props.paddingBottom,
-    sorted_tips = tree.get_tips().sort((a,b) => (
+  const sorted_tips = tree.get_tips().sort((a,b) => (
       b.data.abstract_x - a.data.abstract_x
     ));
   var rightmost;
-  if (!props.showLabels) rightmost = padded_width;
+  if (!props.showLabels) rightmost = width;
   else {
     for(let i=0; i < sorted_tips.length; i++) {
       let tip = sorted_tips[i];
-      rightmost = padded_width - tip.data.text_width;
+      rightmost = width - tip.data.text_width;
       let scale = rightmost / tip.data.abstract_x;
       let none_cross = sorted_tips.map(tip => {
         const tip_x = tip.data.abstract_x * scale,
-          text_x = padded_width - tip.data.text_width,
+          text_x = width - tip.data.text_width,
           this_doesnt_cross = Math.floor(tip_x) < Math.ceil(text_x);
         return this_doesnt_cross;
       }).every(x => x);
@@ -130,10 +129,9 @@ function Phylotree(props) {
       .range([0, rightmost]),
     y_scale = scaleLinear()
       .domain([0, tree.max_y])
-      .range([0, padded_height]),
-    color_scale = getColorScale(tree, props.highlightBranches),
-    transform = `translate(${props.paddingLeft}, ${props.paddingTop})`;
-  return (<g transform={transform}>
+      .range([0, height]),
+    color_scale = getColorScale(tree, props.highlightBranches);
+  return (<g transform={props.transform}>
     {tree.links.map(link => {
       const source_id = link.source.unique_id,
         target_id = link.target.unique_id,
@@ -147,8 +145,8 @@ function Phylotree(props) {
         colorScale={color_scale}
         link={link}
         showLabel={show_label}
-        maxLabelWidth={props.maxLabelWidth}
-        paddedWidth={padded_width}
+        maxLabelWidth={maxLabelWidth}
+        width={width}
         alignTips={props.alignTips}
         branchStyler={props.branchStyler}
         labelStyler={props.labelStyler}
@@ -167,10 +165,6 @@ function Phylotree(props) {
 Phylotree.defaultProps = {
   width: 500,
   height: 500,
-  paddingTop: 10,
-  paddingBottom: 10,
-  paddingLeft: 10,
-  paddingRight: 10,
   showLabels: true,
   skipPlacement: false,
   maxLabelWidth: 20,

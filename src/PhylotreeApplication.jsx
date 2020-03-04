@@ -165,6 +165,8 @@ class PhylotreeApplication extends Component {
     this.setState({alignTips: direction});
   }
   render() {
+    const { padding } = this.props;
+    const { width, height } = this.state;
     return (<div style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}}>
       <h1>React Phylotree</h1>
       <div style={{display: "flex", justifyContent: "space-around"}}>
@@ -195,12 +197,22 @@ class PhylotreeApplication extends Component {
           />
         </ButtonGroup>
       </div>
-      <svg width={this.state.width} height={this.state.height}>
-        <Phylotree {...this.state}/>
+      <svg width={width} height={height}>
+        <Phylotree
+          width={width-2*padding}
+          height={height-2*padding}
+          transform={`translate(${padding}, ${padding})`}
+          tree={this.state.tree}
+          alignTips={this.state.alignTips}
+        />
       </svg>
     </div>);
   }
 }
+
+PhylotreeApplication.defaultProps = {
+  padding: 10
+};
 
 export default PhylotreeApplication;
 

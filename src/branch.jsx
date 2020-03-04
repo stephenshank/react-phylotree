@@ -12,7 +12,7 @@ function Branch(props) {
     target_x = xScale(target.data.abstract_x),
     target_y = yScale(target.data.abstract_y),
     tracer_x2 = props.alignTips == "right" ?
-      props.paddedWidth - (target.data.text_width || 0) :
+      props.width - (target.data.text_width || 0) :
       target_x,
     data = [
       [source_x, source_y],
