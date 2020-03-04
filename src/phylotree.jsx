@@ -3,6 +3,7 @@ import { phylotree } from "phylotree";
 import { scaleLinear, scaleOrdinal } from "d3-scale";
 import { schemeCategory10 } from "d3-scale-chromatic";
 import _ from "underscore";
+import { AxisTop } from "d3-react-axis";
 
 import Branch from "./branch.jsx";
 import text_width from "./text_width";
@@ -129,9 +130,24 @@ function Phylotree(props) {
       .range([0, rightmost]),
     y_scale = scaleLinear()
       .domain([0, tree.max_y])
-      .range([0, height]),
+      .range([props.includeBLAxis ? 60 : 0, height]),
     color_scale = getColorScale(tree, props.highlightBranches);
   return (<g transform={props.transform}>
+    {props.includeBLAxis ? <g>
+      <text
+        x={x_scale(tree.max_x/2)}
+        y={10}
+        alignmentBaseline='middle'
+        textAnchor='middle'
+        fontFamily='Courier'
+      >
+        Substitutions per site
+      </text>
+      <AxisTop
+        transform={`translate(0, 40)`}
+        scale={x_scale}
+      />
+    </g> : null }
     {tree.links.map(link => {
       const source_id = link.source.unique_id,
         target_id = link.target.unique_id,
@@ -172,7 +188,8 @@ Phylotree.defaultProps = {
   accessor: node => +node.data.attribute,
   branchStyler: null,
   labelStyler: null,
-  tooltip: null
+  tooltip: null,
+  includeBLAxis: false
 };
 
 export default Phylotree;

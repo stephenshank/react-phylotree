@@ -204,6 +204,7 @@ class PhylotreeApplication extends Component {
           transform={`translate(${padding}, ${padding})`}
           tree={this.state.tree}
           alignTips={this.state.alignTips}
+          includeBLAxis
         />
       </svg>
     </div>);
