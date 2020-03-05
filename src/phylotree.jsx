@@ -19,7 +19,12 @@ function x_no_branch_lengths(node) {
   return node.parent ? node.parent.data.abstract_x + 1 : 0;
 }
 
+function default_accessor(node){
+  return +node.data.attribute;
+}
+
 function placenodes(tree, perform_internal_layout, accessor) {
+  accessor = accessor || default_accessor;
   var current_leaf_height = -1,
     unique_id = 0;
   tree.max_x = 0;
@@ -185,7 +190,7 @@ Phylotree.defaultProps = {
   skipPlacement: false,
   maxLabelWidth: 20,
   alignTips: "right",
-  accessor: node => +node.data.attribute,
+  accessor: default_accessor,
   branchStyler: null,
   labelStyler: null,
   tooltip: null,
