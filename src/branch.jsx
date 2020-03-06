@@ -36,7 +36,8 @@ function Branch(props) {
   return (<g className="node"
   >
     <path
-      className="branch"
+      className="rp-branch"
+      fill="none"
       d={branch_line(data)}
       {...all_branch_styles}
       onMouseMove={props.tooltip ? e => {

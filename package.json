@@ -1,6 +1,6 @@
 {
   "name": "react-phylotree",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "main": "./library.js",
   "repository": "https://github.com/stephenshank/react-phylotree",
   "author": "Stephen Shank <sshank314@gmail.com>",
