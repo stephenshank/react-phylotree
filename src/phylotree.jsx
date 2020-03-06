@@ -4,6 +4,7 @@ import { scaleLinear, scaleOrdinal } from "d3-scale";
 import { schemeCategory10 } from "d3-scale-chromatic";
 import _ from "underscore";
 import { AxisTop } from "d3-react-axis";
+import { max } from "d3-array";
 
 import Branch from "./branch.jsx";
 import text_width from "./text_width";
@@ -23,8 +24,25 @@ function default_accessor(node){
   return +node.data.attribute;
 }
 
-function placenodes(tree, perform_internal_layout, accessor) {
+function sort_nodes (tree, direction) {
+  tree.traverse_and_compute (function (n) {
+    var d = 1;
+    if (n.children && n.children.length) {
+      d += max (n.children, function (d) { return d["count_depth"];});
+    }
+    n["count_depth"] = d;
+  });
+  const asc = direction == "ascending";
+  tree.resort_children (function (a,b) {
+    return (a["count_depth"] - b["count_depth"]) * (asc ? 1 : -1);
+  });
+}
+
+function placenodes(tree, perform_internal_layout, accessor, sort) {
   accessor = accessor || default_accessor;
+  if(sort) {
+    sort_nodes(tree, sort);
+  }
   var current_leaf_height = -1,
     unique_id = 0;
   tree.max_x = 0;
@@ -103,7 +121,7 @@ function Phylotree(props) {
     tree = new phylotree(newick);
   }
   if(!props.skipPlacement) {
-    placenodes(tree, props.internalNodeLabels, props.accessor);
+    placenodes(tree, props.internalNodeLabels, props.accessor, props.sort);
   }
 
   function attachTextWidth(node) {
@@ -194,6 +212,7 @@ Phylotree.defaultProps = {
   branchStyler: null,
   labelStyler: null,
   tooltip: null,
+  sort: null,
   includeBLAxis: false
 };
 

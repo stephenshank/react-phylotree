@@ -10,7 +10,6 @@ import {
   faSortAmountUp, faAlignRight, faAlignLeft
 } from "@fortawesome/free-solid-svg-icons";
 import { text } from "d3-fetch";
-import { max } from "d3-array";
 
 import Phylotree from "./phylotree.jsx";
 
@@ -118,20 +117,6 @@ function AlignTipsLeftButton(props) {
 }
 
 
-function sort_nodes (tree, direction) {
-  tree.traverse_and_compute (function (n) {
-    var d = 1;
-    if (n.children && n.children.length) {
-      d += max (n.children, function (d) { return d["count_depth"];});
-    }
-    n["count_depth"] = d;
-  });
-  const asc = direction == "ascending";
-  tree.resort_children (function (a,b) {
-    return (a["count_depth"] - b["count_depth"]) * (asc ? 1 : -1);
-  });
-}
-
 class PhylotreeApplication extends Component {
   constructor(props) {
     super(props);
@@ -139,14 +124,15 @@ class PhylotreeApplication extends Component {
       tree: null,
       width: 500,
       height: 500,
-      alignTips: "right"
+      alignTips: "right",
+      sort: null,
+      internal: false
     };
   }
   componentDidMount() {
     text("data/CD2.new")
       .then(newick => {
-        const tree = new phylotree(newick);
-        this.setState({tree});
+        this.setState({newick});
       });
   }
   toggleDimension(dimension, direction) {
@@ -157,9 +143,7 @@ class PhylotreeApplication extends Component {
     this.setState(new_state);
   }
   handleSort(direction) {
-    const { tree } = this.state;
-    sort_nodes(tree, direction);
-    this.setState({tree});
+    this.setState({sort: direction});
   }
   alignTips(direction) {
     this.setState({alignTips: direction});
@@ -196,14 +180,23 @@ class PhylotreeApplication extends Component {
             onClick={()=>this.alignTips("right")}
           />
         </ButtonGroup>
+        <div>
+          <input
+            type='checkbox'
+            onChange={()=>this.setState({internal: !this.state.internal})}
+          />
+          {this.state.internal ? 'Hide' : 'Show' } internal labels
+        </div>
       </div>
       <svg width={width} height={height}>
         <Phylotree
           width={width-2*padding}
           height={height-2*padding}
           transform={`translate(${padding}, ${padding})`}
-          tree={this.state.tree}
+          newick={this.state.newick}
           alignTips={this.state.alignTips}
+          sort={this.state.sort}
+          internalNodeLabels={this.state.internal}
           includeBLAxis
         />
       </svg>
