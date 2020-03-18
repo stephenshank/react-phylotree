@@ -1,6 +1,6 @@
 {
   "name": "react-phylotree",
-  "version": "0.4.1",
+  "version": "0.4.3",
   "main": "./library.js",
   "repository": "https://github.com/stephenshank/react-phylotree",
   "author": "Stephen Shank <sshank314@gmail.com>",
@@ -13,7 +13,7 @@
     "d3": "^5.7.0",
     "d3-react-axis": "0.0.3",
     "phylotree": "1.0.0-alpha.17",
-    "react": "16.12.0",
+    "react": "^16.13.0",
     "underscore": "^1.9.1"
   },
   "devDependencies": {
@@ -32,7 +32,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.8.0",
     "react-bootstrap": "1.0.0-beta.14",
-    "react-dom": "16.12.0",
+    "react-dom": "^16.13.0",
     "react-router-dom": "^5.1.2",
     "react-test-renderer": "^16.8.6",
     "style-loader": "^0.23.1",
@@ -44,7 +44,7 @@
     "develop": "npx webpack-dev-server --mode=development --open",
     "build": "webpack --devtool=none",
     "serve": "node src/server.js",
-    "library": "BABEL_ENV=library npx babel --out-dir lib src && cp package.json lib && mkdir -p lib/styles && cp src/styles/*.css lib/styles",
+    "library": "BABEL_ENV=library npx babel src --out-dir lib --copy-files && cp {package.json,yarn.lock,README.md} lib",
     "yalc": "yarn library && cd lib && yalc push",
     "test": "BABEL_ENV=test npx jest"
   }
