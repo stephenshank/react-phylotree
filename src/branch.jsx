@@ -56,7 +56,7 @@ function Branch(props) {
       x2={tracer_x2}
       y1={target_y}
       y2={target_y}
-      className="branch-tracer"
+      className="rp-branch-tracer"
     /> : null}
     {showLabel ? <text
       x={tracer_x2 + 5}
@@ -64,7 +64,7 @@ function Branch(props) {
       textAnchor="start"
       alignmentBaseline="middle"
       {...Object.assign({}, props.labelStyle, label_style)}
-      className="label"
+      className="rp-label"
     >{target.data.name.slice(0, props.maxLabelWidth)}</text> : null}
   </g>);
 }

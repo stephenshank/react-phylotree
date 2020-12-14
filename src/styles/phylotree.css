@@ -1,23 +1,16 @@
 path.rp-branch {
-  transition: d 0.5s;
+  transition: all 0.5s;
   fill: none;
   shape-rendering: crispEdges;
 }
 
-.branch-tracer {
-  transition: transform 0.5s;
-}
-
-.label {
-  transition: x 0.5s y 0.5s;
-}
-
-text.label {
+text.rp-label {
   font-family: Courier;
   font-size: 14px;
+  transition: all .5s;
 }
 
-.branch-tracer {
+.rp-branch-tracer {
   stroke: #bbb;
   stroke-dasharray: 3,4;
   stroke-width: 1px;
