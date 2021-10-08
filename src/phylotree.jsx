@@ -33,7 +33,7 @@ function sort_nodes (tree, direction) {
     n["count_depth"] = d;
   });
   const asc = direction == "ascending";
-  tree.resort_children (function (a,b) {
+  tree.resortChildren (function (a,b) {
     return (a["count_depth"] - b["count_depth"]) * (asc ? 1 : -1);
   });
 }
@@ -46,7 +46,7 @@ function placenodes(tree, perform_internal_layout, accessor, sort) {
   var current_leaf_height = -1,
     unique_id = 0;
   tree.max_x = 0;
-  const has_branch_lengths = Boolean(accessor(tree.get_tips()[0])),
+  const has_branch_lengths = Boolean(accessor(tree.getTips()[0])),
     x_branch_length = has_branch_lengths ? x_branch_lengths : x_no_branch_lengths;
   function node_layout(node) {
     if(!node.unique_id) {
@@ -67,7 +67,7 @@ function placenodes(tree, perform_internal_layout, accessor, sort) {
     unique_id = node.unique_id = unique_id + 1;
     node.data.abstract_x = x_branch_length(node, accessor);
     tree.max_x = Math.max(tree.max_x, node.data.abstract_x);
-    if(!tree.is_leafnode(node)) {
+    if(!tree.isLeafNode(node)) {
       node.children.forEach(internal_node_layout);
     }
     if(!node.data.abstract_y && node.data.name != "root") {
@@ -87,7 +87,7 @@ function placenodes(tree, perform_internal_layout, accessor, sort) {
     tree.max_y = 0;
     tree.node_order = [];
     internal_node_layout(tree.nodes);
-    const root = tree.get_node_by_name("root");
+    const root = tree.getNodeByName("root");
     root.data.abstract_y = root.children.map(child => child.data.abstract_y)
       .reduce((a,b)=>a+b, 0) / root.children.length;
   } else {
@@ -129,7 +129,7 @@ function Phylotree(props) {
     if(node.children) node.children.forEach(attachTextWidth);
   }
   attachTextWidth(tree.nodes);
-  const sorted_tips = tree.get_tips().sort((a,b) => (
+  const sorted_tips = tree.getTips().sort((a,b) => (
       b.data.abstract_x - a.data.abstract_x
     ));
   var rightmost;
@@ -176,7 +176,7 @@ function Phylotree(props) {
         target_id = link.target.unique_id,
         key = source_id + "," + target_id,
         show_label = props.internalNodeLabels ||
-          (props.showLabels && tree.is_leafnode(link.target));
+          (props.showLabels && tree.isLeafNode(link.target));
       return (<Branch
         key={key}
         xScale={x_scale}
@@ -191,6 +191,7 @@ function Phylotree(props) {
         labelStyler={props.labelStyler}
         tooltip={props.tooltip}
         setTooltip={setTooltip}
+        onClick={props.onBranchClick}
       />);
     }) }
     { tooltip ? <props.tooltip
@@ -213,7 +214,8 @@ Phylotree.defaultProps = {
   labelStyler: null,
   tooltip: null,
   sort: null,
-  includeBLAxis: false
+  includeBLAxis: false,
+  onBranchClick: () => null
 };
 
 export default Phylotree;

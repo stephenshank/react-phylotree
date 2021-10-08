@@ -12,7 +12,7 @@
     "bootstrap": "4.3.1",
     "d3": "^5.7.0",
     "d3-react-axis": "0.0.3",
-    "phylotree": "1.0.0-alpha.17",
+    "phylotree": "1",
     "react": "^16.13.0",
     "underscore": "^1.9.1"
   },

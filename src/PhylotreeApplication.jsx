@@ -126,7 +126,8 @@ class PhylotreeApplication extends Component {
       height: 500,
       alignTips: "right",
       sort: null,
-      internal: false
+      internal: false,
+      clickedBranch: null
     };
   }
   componentDidMount() {
@@ -150,7 +151,7 @@ class PhylotreeApplication extends Component {
   }
   render() {
     const { padding } = this.props;
-    const { width, height } = this.state;
+    const { width, height, clickedBranch } = this.state;
     return (<div style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}}>
       <h1>React Phylotree</h1>
       <div style={{display: "flex", justifyContent: "space-around"}}>
@@ -197,9 +198,15 @@ class PhylotreeApplication extends Component {
           alignTips={this.state.alignTips}
           sort={this.state.sort}
           internalNodeLabels={this.state.internal}
+          onBranchClick={branch => {
+            this.setState({clickedBranch: branch.target.data.name})
+          }}
           includeBLAxis
         />
       </svg>
+      {clickedBranch ? <p>
+        Last clicked branch was {clickedBranch}.
+      </p> : null}
     </div>);
   }
 }

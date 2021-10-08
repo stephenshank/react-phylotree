@@ -1,5 +1,5 @@
 path.rp-branch {
-  transition: all 0.5s;
+  transition: all 0.2s;
   fill: none;
   shape-rendering: crispEdges;
 }
@@ -7,7 +7,7 @@ path.rp-branch {
 text.rp-label {
   font-family: Courier;
   font-size: 14px;
-  transition: all .5s;
+  transition: all 0.2s;
 }
 
 .rp-branch-tracer {
@@ -16,3 +16,6 @@ text.rp-label {
   stroke-width: 1px;
 }
 
+path.rp-branch:hover {
+  stroke-width: 10px;
+}

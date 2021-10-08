@@ -39,6 +39,7 @@ function Branch(props) {
       className="rp-branch"
       fill="none"
       d={branch_line(data)}
+      onClick={() => props.onClick(props.link)}
       {...all_branch_styles}
       onMouseMove={props.tooltip ? e => {
         setTooltip({
