@@ -16,3 +16,11 @@ yarn
 ```
 yarn develop
 ```
+
+### Publish
+
+```
+yarn library
+cd lib
+npm publish
+```
